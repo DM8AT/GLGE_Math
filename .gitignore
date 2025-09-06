@@ -1,0 +1,8 @@
+# ignore VSCode settings
+.vscode 
+
+# ignore the binaries
+build
+
+# ignore my build script
+build.sh
