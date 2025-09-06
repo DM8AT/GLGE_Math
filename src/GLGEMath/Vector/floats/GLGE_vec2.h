@@ -13,17 +13,41 @@
 #ifndef _GLGE_FLOAT_VEC2_
 #define _GLGE_FLOAT_VEC2_
 
-//include 
+//include the settings
+#include "../../GLGEMath_Settings.h"
 
+//if SIMD is requested, include the vector intrinsics
+#if GLGE_MATH_USE_SIMD
+#include <xmmintrin.h>
+#endif
+
+/**
+ * @brief store a simple 2D vector
+ */
 typedef struct s_vec2 {
 
+    /**
+     * @brief store all the data for a 2D vector
+     */
     union {
-        float x;
-        float y;
-    };
-    union {
-        float r;
-        float g;
+        //store the values for a position
+        struct {
+            float x;
+            float y;
+        };
+        //store the values like for a color
+        struct {
+            float r;
+            float g;
+        };
+        //store the values as an array
+        float vals[2];
+
+        //if SIMD is requested, also add the intrinsic vector type
+        #if GLGE_MATH_USE_SIMD
+        //store a simd intrinsic type to access the floats
+        __m64 simd;
+        #endif
     };
 
 } vec2;
