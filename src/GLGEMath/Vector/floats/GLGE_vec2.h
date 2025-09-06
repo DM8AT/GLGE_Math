@@ -50,6 +50,19 @@ typedef struct s_vec2 {
         #endif
     };
 
+    //only add element functions for C++
+    #if __cplusplus
+
+    s_vec2(float _x, float _y) : x(_x), y(_y) {}
+
+    s_vec2(float _xy) : x(_xy), y(_xy) {}
+
+    s_vec2(float _val[2]) : vals{_val[0], _val[1]} {}
+
+    s_vec2(const __m64& _simd) : simd(_simd) {}
+
+    #endif
+
 } vec2;
 
 #endif
