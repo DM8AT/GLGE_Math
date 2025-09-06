@@ -15,10 +15,12 @@
 
 //include the settings
 #include "../../GLGEMath_Settings.h"
+//SIMD is not worth it for small vectors (2D vectors). They are actually slower since only 128 bit vectors
+//can be used as floats, which both wasts RAM and increases the amount to add
 
-//if SIMD is requested, include the vector intrinsics
-#if GLGE_MATH_USE_SIMD
-#include <xmmintrin.h>
+//for C++ add the iostream library for print operators
+#if __cplusplus
+#include <iostream>
 #endif
 
 /**
@@ -42,27 +44,100 @@ typedef struct s_vec2 {
         };
         //store the values as an array
         float vals[2];
-
-        //if SIMD is requested, also add the intrinsic vector type
-        #if GLGE_MATH_USE_SIMD
-        //store a simd intrinsic type to access the floats
-        __m64 simd;
-        #endif
     };
 
     //only add element functions for C++
     #if __cplusplus
 
+    /**
+     * @brief Construct a new vec2
+     * 
+     * @param _x the value for the x axis / red channel
+     * @param _y the value for the y axis / green channel
+     */
     s_vec2(float _x, float _y) : x(_x), y(_y) {}
 
+    /**
+     * @brief Construct a new vec2
+     * 
+     * @param _xy the value for both axis / channels
+     */
     s_vec2(float _xy) : x(_xy), y(_xy) {}
 
+    /**
+     * @brief Construct a new vec2
+     * 
+     * @param _val a float array with at least 2 elements
+     */
     s_vec2(float _val[2]) : vals{_val[0], _val[1]} {}
 
-    s_vec2(const __m64& _simd) : simd(_simd) {}
+    /**
+     * @brief Destroy the vec2
+     */
+    ~s_vec2() {}
+
+    /**
+     * @brief add two vectors together
+     * 
+     * @param u a constant reference to the other element to add
+     * @return s_vec2 the sum of both vectors
+     */
+    inline s_vec2 operator+(const s_vec2& u) const noexcept
+    {return s_vec2(x + u.x, y + u.y);}
+
+    /**
+     * @brief subtract two vectors from another
+     * 
+     * @param u the vector to subtract from this vector
+     * @return s_vec2 the difference of both vectors
+     */
+    inline s_vec2 operator-(const s_vec2& u) const noexcept
+    {return s_vec2(x - u.x, y - u.y);}
+
+    /**
+     * @brief multiply two vectors per-element together 
+     * 
+     * @param u the vector to multiply to this vector
+     * @return s_vec2 the product of both vectors
+     */
+    inline s_vec2 operator*(const s_vec2& u) const noexcept
+    {return s_vec2(x * u.x, y * u.y);}
+
+    /**
+     * @brief divide two vectors per-element
+     * 
+     * @param u the vector to use as denominator
+     * @return s_vec2 the fraction of both vectors
+     */
+    inline s_vec2 operator/(const s_vec2& u) const noexcept
+    {return s_vec2(x / u.x, y / u.y);}
+
+    /**
+     * @brief print the vector to an output stream
+     * 
+     * @param os the output stream to fill
+     * @param v the vector to print to the output stream
+     * @return std::ostream& the filled output stream
+     */
+    inline friend std::ostream& operator<< (std::ostream& os, const s_vec2& v) noexcept
+    {return os << "(" << v.x << ", " << v.y << ")";}
 
     #endif
 
 } vec2;
+
+//add the C++ specific functions
+#if __cplusplus
+
+/**
+ * @brief calculate the dot product of two 2D float vectors
+ * 
+ * @param v the first float vector
+ * @param u the second float vector
+ * @return const float the dot product of both vectors
+ */
+inline const float dot(const vec2& v, const vec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+
+#endif
 
 #endif
