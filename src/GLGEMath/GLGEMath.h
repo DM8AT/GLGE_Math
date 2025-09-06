@@ -13,6 +13,7 @@
 #ifndef _GLGE_MATH_
 #define _GLGE_MATH_
 
-
+//include the float vectors
+#include "floats/GLGEVecFloats.h"
 
 #endif

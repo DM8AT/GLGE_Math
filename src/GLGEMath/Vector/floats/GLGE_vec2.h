@@ -12,3 +12,20 @@
 //header guard
 #ifndef _GLGE_FLOAT_VEC2_
 #define _GLGE_FLOAT_VEC2_
+
+//include 
+
+typedef struct s_vec2 {
+
+    union {
+        float x;
+        float y;
+    };
+    union {
+        float r;
+        float y;
+    };
+
+} vec2;
+
+#endif
