@@ -23,7 +23,7 @@ typedef struct s_vec2 {
     };
     union {
         float r;
-        float y;
+        float g;
     };
 
 } vec2;

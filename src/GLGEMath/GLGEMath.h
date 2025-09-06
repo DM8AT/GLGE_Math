@@ -14,6 +14,6 @@
 #define _GLGE_MATH_
 
 //include the float vectors
-#include "floats/GLGEVecFloats.h"
+#include "Vector/floats/GLGEVecFloats.h"
 
 #endif
