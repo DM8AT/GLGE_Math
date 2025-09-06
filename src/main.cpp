@@ -29,7 +29,7 @@ void testVector()
 
     for (uint64_t i = 0; i < UINT32_MAX; ++i)
     {
-        vec2 r = v / u;
+        vec2_add(v, u);
     }
 }
 

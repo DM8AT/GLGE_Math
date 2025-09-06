@@ -6,11 +6,11 @@ set(GLGE_MATH_VERSION 1.0.0)
 
 # store all the source files
 set(GLGE_MATH_SRC 
-
+        Vector/floats/GLGE_vec2.cpp
     )
 
 # main project for the library
-project(GLGE_MATH LANGUAGEs CXX VERSION ${GLGE_MATH_VERSION})
+project(GLGE_MATH LANGUAGES CXX VERSION ${GLGE_MATH_VERSION})
 
 # compile the library
 add_library(GLGE_MATH ${GLGE_MATH_SRC})

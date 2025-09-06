@@ -95,6 +95,14 @@ typedef struct s_vec2 {
     {return s_vec2(x - u.x, y - u.y);}
 
     /**
+     * @brief negate a vector
+     * 
+     * @return s_vec2 the negated vector
+     */
+    inline s_vec2 operator-(void) const noexcept
+    {return s_vec2(-x, -y);}
+
+    /**
      * @brief multiply two vectors per-element together 
      * 
      * @param u the vector to multiply to this vector
@@ -139,5 +147,58 @@ typedef struct s_vec2 {
 inline const float dot(const vec2& v, const vec2& u) noexcept {return v.x * u.x + v.y * u.y;}
 
 #endif
+
+/**
+ * @brief add two 2D float vectors together
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return vec2 the sum of both vectors
+ */
+vec2 vec2_add(vec2 v, vec2 u);
+
+/**
+ * @brief subtract two 2D float vectors
+ * 
+ * @param v the vector to subtract from
+ * @param u the vector to subtract from the other vector
+ * @return vec2 the difference of both vectors
+ */
+vec2 vec2_subtract(vec2 v, vec2 u);
+
+/**
+ * @brief negate a 2D vector
+ * 
+ * @param v the vector to negate
+ * @return vec2 the negated vector
+ */
+vec2 vec2_negate(vec2 v);
+
+/**
+ * @brief multiply two 2D float vectors together
+ * 
+ * @param v the first vector to multiply with
+ * @param u the second vector to multiply with
+ * @return vec2 the product of two vectors
+ */
+vec2 vec2_multiply(vec2 v, vec2 u);
+
+/**
+ * @brief divide two 2D float vectors
+ * 
+ * @param v the 2D vector to use as nominator
+ * @param u the 2D vector to use as denominator
+ * @return vec2 the fraction of both vectors
+ */
+vec2 vec2_divide(vec2 v, vec2 u);
+
+/**
+ * @brief calculate the dot product of two 2D float vectors
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return float the dot product of two 2D float vectors
+ */
+float vec2_dot(vec2 v, vec2 u);
 
 #endif
