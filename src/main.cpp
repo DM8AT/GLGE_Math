@@ -24,12 +24,13 @@ void testVector()
 {
     ScopeTimer s("Vector Test");
 
-    vec4 v(0,1,0,1);
-    vec4 u(1,0,1,0);
+    dvec4 v(0,1,0,1);
+    dvec4 u(1,0,1,0);
 
-    for (uint64_t i = 0; i < UINT32_MAX; ++i)
+    uint64_t iterCount = ((uint64_t)UINT32_MAX)<<1;
+    for (uint64_t i = 0; i < iterCount; ++i)
     {
-        vec4 a = v + u;
+        dvec4 a = v + u;
     }
 }
 

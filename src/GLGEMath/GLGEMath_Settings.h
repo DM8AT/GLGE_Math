@@ -15,5 +15,7 @@
 
 //define if SIMD is allowed
 #define GLGE_MATH_USE_SIMD 1
+//if SIMD is allowed, specify wether the AVX2 extension can be used
+#define GLGE_MATH_ALLOW_AVX2 1
 
 #endif
