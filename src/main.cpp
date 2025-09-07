@@ -24,18 +24,19 @@ void testVector()
 {
     ScopeTimer s("Vector Test");
 
-    dvec4 v(0,1,0,1);
-    dvec4 u(1,0,1,0);
+    ivec4 v(0,1,0,1);
+    ivec4 u(1,0,1,0);
 
     uint64_t iterCount = ((uint64_t)UINT32_MAX)<<1;
     for (uint64_t i = 0; i < iterCount; ++i)
     {
-        dvec4 a = v + u;
+        ivec4 a = v + u;
     }
 }
 
 int main(void)
 {
-    testVector();
+    std::cout << ivec4(0) - ivec4(1) << "\n";
+    //testVector();
     return 0;
 }

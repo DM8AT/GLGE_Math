@@ -16,11 +16,8 @@
 //include the 2D vector for upcasting
 #include "GLGE_vec2.h"
 
-//if SIMD is requested, include SIMD intrinsics
-#include "../../GLGEMath_Settings.h"
-#if GLGE_MATH_USE_SIMD
-#include <xmmintrin.h>
-#endif
+//intrinsics are not available for 3D float vectors because no intrinsic type fits to the size of 3D vectors
+//loading to the intrinsics for each operation takes too much time
 
 /**
  * @brief store a 3D vector of floats
@@ -45,12 +42,6 @@ typedef struct s_vec3 {
         };
         //store the values as a float vector
         float vals[3];
-
-        //only add the SIMD stuff if SIMD is enabled
-        #if GLGE_MATH_USE_SIMD
-        //store the values for SIMD processing
-        __m128 simd;
-        #endif
     };
 
     //for C++ add all member functions
@@ -94,59 +85,6 @@ typedef struct s_vec3 {
      */
     inline s_vec3(float _x, const vec2& yz) : x(_x), y(yz.x), z(yz.y) {}
 
-    //only implement the SIMD constructor if SIMD is enabled
-    #if GLGE_MATH_USE_SIMD
-
-    /**
-     * @brief Construct a new vec3
-     * 
-     * @param _simd the values for the simd processing
-     */
-    inline s_vec3(const __m128& _simd) : simd(_simd) {}
-
-    #endif
-
-    //implement the SIMD operators
-    #if GLGE_MATH_USE_SIMD
-
-    /**
-     * @brief add two 3D float vectors together
-     * 
-     * @param u the second vector to add to this one
-     * @return const s_vec3 the sum of both vectors
-     */
-    inline s_vec3 operator+(const s_vec3& u) const noexcept
-    {return _mm_add_ps(simd, u.simd);}
-
-    /**
-     * @brief subtract two 3D float vectors
-     * 
-     * @param u the vector to subtract from this one
-     * @return const s_vec3 the difference of both vectors
-     */
-    inline s_vec3 operator-(const s_vec3& u) const noexcept
-    {return _mm_sub_ps(simd, u.simd);}
-
-    /**
-     * @brief multiply two 3D float vectors together
-     * 
-     * @param u the vector to multiply to this one
-     * @return s_vec3 the product of both vectors
-     */
-    inline s_vec3 operator*(const s_vec3& u) const noexcept
-    {return _mm_mul_ps(simd, u.simd);}
-
-    /**
-     * @brief divide one vector by another
-     * 
-     * @param u the vector to use as the denominator
-     * @return s_vec3 the fraction of both vectors
-     */
-    inline s_vec3 operator/(const s_vec3& u) const noexcept
-    {return _mm_div_ps(simd, u.simd);}
-
-    #else //else, implement the not simd operators
-
     /**
      * @brief add two 3D float vectors together
      * 
@@ -182,8 +120,6 @@ typedef struct s_vec3 {
      */
     inline s_vec3 operator/(const s_vec3& u) const noexcept
     {return s_vec3(x / u.x, y / u.y, z / u.z);}
-
-    #endif
 
     /**
      * @brief negate a 3D float vector

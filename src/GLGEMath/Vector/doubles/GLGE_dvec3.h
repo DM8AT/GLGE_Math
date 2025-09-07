@@ -19,12 +19,7 @@
 //if SIMD is requested, include SIMD intrinsics
 #include "../../GLGEMath_Settings.h"
 #if GLGE_MATH_USE_SIMD
-//if AVX2 is allowed, use AVX2
-#if GLGE_MATH_ALLOW_AVX2
-#include <immintrin.h>
-#else
 #include <xmmintrin.h>
-#endif
 #endif
 
 /**
@@ -53,17 +48,11 @@ typedef struct s_dvec3 {
 
         //only add the SIMD stuff if SIMD is enabled
         #if GLGE_MATH_USE_SIMD
-        //check if AVX2 is allowed
-        #if GLGE_MATH_ALLOW_AVX2
-        //use the AVX2 intrinsics
-        __m256d simd;
-        #else
         //else, use SSE
         struct {
             __m128d lower;
             double upper;
         };
-        #endif
         #endif
     };
 
@@ -111,18 +100,6 @@ typedef struct s_dvec3 {
     //only implement the SIMD constructor if SIMD is enabled
     #if GLGE_MATH_USE_SIMD
 
-    //check if AVX2 is allowed to create a AVX2 constructor
-    #if GLGE_MATH_ALLOW_AVX2
-
-        /**
-         * @brief Construct a new dvec3
-         * 
-         * @param _simd the values for the simd processing
-         */
-        inline s_dvec3(const __m256d& _simd) : simd(_simd) {}
-
-    #else //else, create the constructor for SSE
-
         /**
          * @brief Construct a new dvec3
          * 
@@ -133,89 +110,44 @@ typedef struct s_dvec3 {
 
     #endif
 
-    #endif
-
     //implement the SIMD operators
     #if GLGE_MATH_USE_SIMD
 
-        //check if AVX2 is allowed to implement AVX2 or the other calculation
-        #if GLGE_MATH_ALLOW_AVX2
+    /**
+     * @brief add two 3D double vectors together
+     * 
+     * @param u the second vector to add to this one
+     * @return const s_dvec3 the sum of both vectors
+     */
+    inline s_dvec3 operator+(const s_dvec3& u) const noexcept
+    {return s_dvec3(_mm_add_pd(lower, u.lower), upper + u.upper);}
 
-        /**
-         * @brief add two 3D double vectors together
-         * 
-         * @param u the second vector to add to this one
-         * @return const s_dvec3 the sum of both vectors
-         */
-        inline s_dvec3 operator+(const s_dvec3& u) const noexcept
-        {return _mm256_add_pd(simd, u.simd);}
+    /**
+     * @brief subtract two 3D double vectors
+     * 
+     * @param u the vector to subtract from this one
+     * @return const s_dvec3 the difference of both vectors
+     */
+    inline s_dvec3 operator-(const s_dvec3& u) const noexcept
+    {return s_dvec3(_mm_sub_pd(lower, u.lower), upper - u.upper);}
 
-        /**
-         * @brief subtract two 3D double vectors
-         * 
-         * @param u the vector to subtract from this one
-         * @return const s_dvec3 the difference of both vectors
-         */
-        inline s_dvec3 operator-(const s_dvec3& u) const noexcept
-        {return _mm256_sub_pd(simd, u.simd);}
+    /**
+     * @brief multiply two 3D double vectors together
+     * 
+     * @param u the vector to multiply to this one
+     * @return s_dvec3 the product of both vectors
+     */
+    inline s_dvec3 operator*(const s_dvec3& u) const noexcept
+    {return s_dvec3(_mm_mul_pd(lower, u.lower), upper * u.upper);}
 
-        /**
-         * @brief multiply two 3D double vectors together
-         * 
-         * @param u the vector to multiply to this one
-         * @return s_dvec3 the product of both vectors
-         */
-        inline s_dvec3 operator*(const s_dvec3& u) const noexcept
-        {return _mm256_mul_pd(simd, u.simd);}
-
-        /**
-         * @brief divide one vector by another
-         * 
-         * @param u the vector to use as the denominator
-         * @return s_dvec3 the fraction of both vectors
-         */
-        inline s_dvec3 operator/(const s_dvec3& u) const noexcept
-        {return _mm256_div_pd(simd, u.simd);}
-
-        #else //else, implement the calculations for the SSE implementation
-
-        /**
-         * @brief add two 3D double vectors together
-         * 
-         * @param u the second vector to add to this one
-         * @return const s_dvec3 the sum of both vectors
-         */
-        inline s_dvec3 operator+(const s_dvec3& u) const noexcept
-        {return s_dvec3(_mm_add_pd(lower, u.lower), upper + u.upper);}
-
-        /**
-         * @brief subtract two 3D double vectors
-         * 
-         * @param u the vector to subtract from this one
-         * @return const s_dvec3 the difference of both vectors
-         */
-        inline s_dvec3 operator-(const s_dvec3& u) const noexcept
-        {return s_dvec3(_mm_sub_pd(lower, u.lower), upper - u.upper);}
-
-        /**
-         * @brief multiply two 3D double vectors together
-         * 
-         * @param u the vector to multiply to this one
-         * @return s_dvec3 the product of both vectors
-         */
-        inline s_dvec3 operator*(const s_dvec3& u) const noexcept
-        {return s_dvec3(_mm_mul_pd(lower, u.lower), upper * u.upper);}
-
-        /**
-         * @brief divide one vector by another
-         * 
-         * @param u the vector to use as the denominator
-         * @return s_dvec3 the fraction of both vectors
-         */
-        inline s_dvec3 operator/(const s_dvec3& u) const noexcept
-        {return s_dvec3(_mm_div_pd(lower, u.lower), upper / u.upper);}
-
-        #endif
+    /**
+     * @brief divide one vector by another
+     * 
+     * @param u the vector to use as the denominator
+     * @return s_dvec3 the fraction of both vectors
+     */
+    inline s_dvec3 operator/(const s_dvec3& u) const noexcept
+    {return s_dvec3(_mm_div_pd(lower, u.lower), upper / u.upper);}
 
     #else //else, implement the not simd operators
 

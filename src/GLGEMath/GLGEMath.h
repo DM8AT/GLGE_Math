@@ -17,5 +17,7 @@
 #include "Vector/floats/GLGEVecFloats.h"
 //include double vectors
 #include "Vector/doubles/GLGEVecDoubles.h"
+//include integer vectors
+#include "Vector/int32_t/GLGEVecInts.h"
 
 #endif

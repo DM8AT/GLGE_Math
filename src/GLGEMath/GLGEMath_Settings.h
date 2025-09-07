@@ -13,6 +13,9 @@
 #ifndef _GLGE_MATH_SETTINGS_
 #define _GLGE_MATH_SETTINGS_
 
+//include specific sized integers
+#include <stdint.h>
+
 //define if SIMD is allowed
 #define GLGE_MATH_USE_SIMD 1
 //if SIMD is allowed, specify wether the AVX2 extension can be used

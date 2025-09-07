@@ -21,7 +21,11 @@
 //if SIMD is requested, include SIMD intrinsics
 #include "../../GLGEMath_Settings.h"
 #if GLGE_MATH_USE_SIMD
+#if GLGE_MATH_ALLOW_AVX2
+#include <immintrin.h>
+#else
 #include <xmmintrin.h>
+#endif
 #endif
 
 /**
