@@ -24,21 +24,17 @@ void testVector()
 {
     ScopeTimer s("Vector Test");
 
-    vec3 v(0,1,0);
-    vec3 u(1,0,1);
+    vec4 v(0,1,0,1);
+    vec4 u(1,0,1,0);
 
     for (uint64_t i = 0; i < UINT32_MAX; ++i)
     {
-        vec3 a = v + u;
-        vec3 s = v - u;
-        vec3 m = v * u;
-        vec3 d = v / u;
-        vec3 n = -v;
+        vec4 a = v + u;
     }
 }
 
 int main(void)
 {
-    std::cout << cross(vec3(1,0,0), vec3(0,1,0)) << "\n";
+    testVector();
     return 0;
 }
