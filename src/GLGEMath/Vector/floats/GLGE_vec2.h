@@ -52,6 +52,13 @@ typedef struct s_vec2 {
     /**
      * @brief Construct a new vec2
      * 
+     * Set everything to 0
+     */
+    s_vec2() : x(0), y(0) {}
+
+    /**
+     * @brief Construct a new vec2
+     * 
      * @param _x the value for the x axis / red channel
      * @param _y the value for the y axis / green channel
      */
@@ -148,6 +155,11 @@ inline const float dot(const vec2& v, const vec2& u) noexcept {return v.x * u.x 
 
 #endif
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief add two 2D float vectors together
  * 
@@ -200,5 +212,10 @@ vec2 vec2_divide(vec2 v, vec2 u);
  * @return float the dot product of two 2D float vectors
  */
 float vec2_dot(vec2 v, vec2 u);
+
+//end a potential C section
+#if __cplusplus
+}
+#endif
 
 #endif

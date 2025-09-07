@@ -24,12 +24,16 @@ void testVector()
 {
     ScopeTimer s("Vector Test");
 
-    vec2 v(0,1);
-    vec2 u(1,0);
+    vec3 v(0,1,0);
+    vec3 u(1,0,1);
 
     for (uint64_t i = 0; i < UINT32_MAX; ++i)
     {
-        vec2_add(v, u);
+        vec3 a = v + u;
+        vec3 s = v - u;
+        vec3 m = v * u;
+        vec3 d = v / u;
+        vec3 n = -v;
     }
 }
 

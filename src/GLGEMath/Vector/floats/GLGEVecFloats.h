@@ -15,5 +15,7 @@
 
 //include float 2D vectors
 #include "GLGE_vec2.h"
+//include float 3D vectors
+#include "GLGE_vec3.h"
 
 #endif
