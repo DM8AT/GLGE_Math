@@ -60,7 +60,7 @@ typedef struct s_vec3 {
      * @brief Construct a new vec3
      * 
      */
-    s_vec3() : x(0), y(0), z(0) {}
+    inline s_vec3() : x(0), y(0), z(0) {}
 
     /**
      * @brief Construct a new vec3
@@ -69,14 +69,14 @@ typedef struct s_vec3 {
      * @param _y the value for the y axis / green channel
      * @param _z the value for the z axis / blue channel
      */
-    s_vec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+    inline s_vec3(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
 
     /**
      * @brief Construct a new vec3
      * 
      * @param xyz the value for the x, y and z axis as well as for the red, green and blue channel
      */
-    s_vec3(float xyz) : x(xyz), y(xyz), z(xyz) {}
+    inline s_vec3(float xyz) : x(xyz), y(xyz), z(xyz) {}
 
     /**
      * @brief Construct a new vec3
@@ -84,7 +84,7 @@ typedef struct s_vec3 {
      * @param xy the values for the x and y axis / red and green channel
      * @param _z the value for the z axis / blue channel
      */
-    s_vec3(const vec2& xy, float _z) : x(xy.x), y(xy.y), z(_z) {}
+    inline s_vec3(const vec2& xy, float _z) : x(xy.x), y(xy.y), z(_z) {}
 
     /**
      * @brief Construct a new vec3
@@ -92,7 +92,7 @@ typedef struct s_vec3 {
      * @param _x the value for the x axis / red channel
      * @param yz the value for the y and z axis / green and blue channel
      */
-    s_vec3(float _x, const vec2& yz) : x(_x), y(yz.x), z(yz.y) {}
+    inline s_vec3(float _x, const vec2& yz) : x(_x), y(yz.x), z(yz.y) {}
 
     //only implement the SIMD constructor if SIMD is enabled
     #if GLGE_MATH_USE_SIMD
@@ -102,7 +102,7 @@ typedef struct s_vec3 {
      * 
      * @param _simd the values for the simd processing
      */
-    s_vec3(const __m128& _simd) : simd(_simd) {}
+    inline s_vec3(const __m128& _simd) : simd(_simd) {}
 
     #endif
 
@@ -206,5 +206,100 @@ typedef struct s_vec3 {
     #endif
 
 } vec3;
+
+//add the C++ specific functions
+#if __cplusplus
+
+/**
+ * @brief calculate the dot product of two 2D float vectors
+ * 
+ * @param v the first float vector
+ * @param u the second float vector
+ * @return const float the dot product of both vectors
+ */
+inline const float dot(const vec3& v, const vec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
+
+/**
+ * @brief calculate the cross product between two 3D vectors
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return const vec3 the cross product (vector product) of both vectors
+ */
+inline const vec3 cross(const vec3& v, const vec3& u) noexcept {return vec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+
+#endif
+
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
+/**
+ * @brief add two 3D float vectors together
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return vec3 the sum of both vectors
+ */
+vec3 vec3_add(vec3 v, vec3 u);
+
+/**
+ * @brief subtract two 3D float vectors
+ * 
+ * @param v the vector to subtract from
+ * @param u the vector to subtract from the other vector
+ * @return vec3 the difference of both vectors
+ */
+vec3 vec3_subtract(vec3 v, vec3 u);
+
+/**
+ * @brief negate a 3D vector
+ * 
+ * @param v the vector to negate
+ * @return vec3 the negated vector
+ */
+vec3 vec3_negate(vec3 v);
+
+/**
+ * @brief multiply two 3D float vectors together
+ * 
+ * @param v the first vector to multiply with
+ * @param u the second vector to multiply with
+ * @return vec3 the product of two vectors
+ */
+vec3 vec3_multiply(vec3 v, vec3 u);
+
+/**
+ * @brief divide two 3D float vectors
+ * 
+ * @param v the 3D vector to use as nominator
+ * @param u the 3D vector to use as denominator
+ * @return vec3 the fraction of both vectors
+ */
+vec3 vec3_divide(vec3 v, vec3 u);
+
+/**
+ * @brief calculate the dot product of two 3D float vectors
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return float the dot product of two 3D float vectors
+ */
+float vec3_dot(vec3 v, vec3 u);
+
+/**
+ * @brief calculate the cross product of two 3D float vectors
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return vec3 a vector perpendicular to the inputted vectors (or (0,0,0) if both vectors are congruential)
+ */
+vec3 vec3_cross(vec3 v, vec3 u);
+
+//end a potential C section
+#if __cplusplus
+}
+#endif
 
 #endif

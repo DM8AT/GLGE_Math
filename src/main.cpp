@@ -39,7 +39,6 @@ void testVector()
 
 int main(void)
 {
-    testVector();
-    std::cout << "Hello World!\n";
+    std::cout << cross(vec3(1,0,0), vec3(0,1,0)) << "\n";
     return 0;
 }
