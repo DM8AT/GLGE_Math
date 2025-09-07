@@ -16,7 +16,11 @@ set(GLGE_MATH_SRC
 
         Vector/int32_t/GLGE_ivec2.cpp
         Vector/int32_t/GLGE_ivec3.cpp
-        #Vector/int32_t/GLGE_dvec4.cpp
+        Vector/int32_t/GLGE_ivec4.cpp
+
+        Vector/uint32_t/GLGE_uivec2.cpp
+        Vector/uint32_t/GLGE_uivec3.cpp
+        Vector/uint32_t/GLGE_uivec4.cpp
     )
 
 # needed to check if AVX2 is supported

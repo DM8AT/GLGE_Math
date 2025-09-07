@@ -19,5 +19,7 @@
 #include "Vector/doubles/GLGEVecDoubles.h"
 //include integer vectors
 #include "Vector/int32_t/GLGEVecInts.h"
+//include the unsigned integer vectors
+#include "Vector/uint32_t/GLGEVecUInts.h"
 
 #endif
