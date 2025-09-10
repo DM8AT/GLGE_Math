@@ -20,22 +20,33 @@ private:
     std::chrono::high_resolution_clock::time_point m_startTime;
 };
 
-void testVector()
+void testVec4(void* p_iters)
 {
-    ScopeTimer s("Vector Test");
+    uint64_t iters = *((uint64_t*)p_iters);
+    ScopeTimer s("Vec4 Test");
+    vec4 v(0,1,0,1);
+    vec4 u(1,0,1,0);
 
-    uivec4 v(0,1,0,1);
-    uivec4 u(1,0,1,0);
-
-    uint64_t iterCount = ((uint64_t)UINT32_MAX)<<1;
-    for (uint64_t i = 0; i < iterCount; ++i)
+    for (uint64_t i = 0; i < iters; ++i)
     {
-        uivec4 a = v + u;
+        vec4 r = u + v;
+    }
+}
+
+void testVec3(void* p_iters)
+{
+    uint64_t iters = *((uint64_t*)p_iters);
+    ScopeTimer s("Vec3 Test");
+    vec3 v(0,1,0);
+    vec3 u(1,0,1);
+
+    for (uint64_t i = 0; i < iters; ++i)
+    {
+        vec3 r = u + v;
     }
 }
 
 int main(void)
 {
-    testVector();
     return 0;
 }
