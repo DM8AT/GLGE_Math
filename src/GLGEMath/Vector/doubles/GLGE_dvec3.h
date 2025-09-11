@@ -63,7 +63,7 @@ typedef struct s_dvec3 {
      * @brief Construct a new dvec3
      * 
      */
-    inline s_dvec3() : x(0), y(0), z(0) {}
+    inline constexpr s_dvec3() : x(0), y(0), z(0) {}
 
     /**
      * @brief Construct a new dvec3
@@ -72,14 +72,14 @@ typedef struct s_dvec3 {
      * @param _y the value for the y axis / green channel
      * @param _z the value for the z axis / blue channel
      */
-    inline s_dvec3(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {}
+    inline constexpr s_dvec3(double _x, double _y, double _z) : x(_x), y(_y), z(_z) {}
 
     /**
      * @brief Construct a new dvec3
      * 
      * @param xyz the value for the x, y and z axis as well as for the red, green and blue channel
      */
-    inline s_dvec3(double xyz) : x(xyz), y(xyz), z(xyz) {}
+    inline constexpr s_dvec3(double xyz) : x(xyz), y(xyz), z(xyz) {}
 
     /**
      * @brief Construct a new dvec3
@@ -87,7 +87,7 @@ typedef struct s_dvec3 {
      * @param xy the values for the x and y axis / red and green channel
      * @param _z the value for the z axis / blue channel
      */
-    inline s_dvec3(const dvec2& xy, double _z) : x(xy.x), y(xy.y), z(_z) {}
+    inline constexpr s_dvec3(const dvec2& xy, double _z) : x(xy.x), y(xy.y), z(_z) {}
 
     /**
      * @brief Construct a new dvec3
@@ -95,7 +95,7 @@ typedef struct s_dvec3 {
      * @param _x the value for the x axis / red channel
      * @param yz the value for the y and z axis / green and blue channel
      */
-    inline s_dvec3(double _x, const dvec2& yz) : x(_x), y(yz.x), z(yz.y) {}
+    inline constexpr s_dvec3(double _x, const dvec2& yz) : x(_x), y(yz.x), z(yz.y) {}
 
     //only implement the SIMD constructor if SIMD is enabled
     #if GLGE_MATH_USE_SIMD
@@ -106,7 +106,7 @@ typedef struct s_dvec3 {
          * @param _lower the value for the lower two elements
          * @param _upper the value for the upper element
          */
-        inline s_dvec3(const __m128d& _lower, double _upper) : lower(_lower), upper(_upper) {}
+        inline constexpr s_dvec3(const __m128d& _lower, double _upper) : lower(_lower), upper(_upper) {}
 
     #endif
 
@@ -157,7 +157,7 @@ typedef struct s_dvec3 {
      * @param u the second vector to add to this one
      * @return const s_dvec3 the sum of both vectors
      */
-    inline s_dvec3 operator+(const s_dvec3& u) const noexcept
+    inline constexpr s_dvec3 operator+(const s_dvec3& u) const noexcept
     {return s_dvec3(x + u.x, y + u.y, z + u.z);}
 
     /**
@@ -166,7 +166,7 @@ typedef struct s_dvec3 {
      * @param u the vector to subtract from this one
      * @return const s_dvec3 the difference of both vectors
      */
-    inline s_dvec3 operator-(const s_dvec3& u) const noexcept
+    inline constexpr s_dvec3 operator-(const s_dvec3& u) const noexcept
     {return s_dvec3(x - u.x, y - u.y, z - u.z);}
 
     /**
@@ -175,7 +175,7 @@ typedef struct s_dvec3 {
      * @param u the vector to multiply to this one
      * @return s_dvec3 the product of both vectors
      */
-    inline s_dvec3 operator*(const s_dvec3& u) const noexcept
+    inline constexpr s_dvec3 operator*(const s_dvec3& u) const noexcept
     {return s_dvec3(x * u.x, y * u.y, z * u.z);}
 
     /**
@@ -184,7 +184,7 @@ typedef struct s_dvec3 {
      * @param u the vector to use as the denominator
      * @return s_dvec3 the fraction of both vectors
      */
-    inline s_dvec3 operator/(const s_dvec3& u) const noexcept
+    inline constexpr s_dvec3 operator/(const s_dvec3& u) const noexcept
     {return s_dvec3(x / u.x, y / u.y, z / u.z);}
 
     #endif
@@ -194,7 +194,7 @@ typedef struct s_dvec3 {
      * 
      * @return s_dvec3 the negated vector
      */
-    inline s_dvec3 operator-(void)  const noexcept
+    inline constexpr s_dvec3 operator-(void)  const noexcept
     {return s_dvec3(-x,-y,-z);}
 
     /**
@@ -221,7 +221,7 @@ typedef struct s_dvec3 {
  * @param u the second double vector
  * @return const double the dot product of both vectors
  */
-inline double dot(const dvec3& v, const dvec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
+inline constexpr double dot(const dvec3& v, const dvec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
 
 /**
  * @brief calculate the cross product between two 3D vectors
@@ -230,7 +230,23 @@ inline double dot(const dvec3& v, const dvec3& u) noexcept {return v.x * u.x + v
  * @param u the second vector
  * @return const dvec3 the cross product (vector product) of both vectors
  */
-inline dvec3 cross(const dvec3& v, const dvec3& u) noexcept {return dvec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+inline constexpr dvec3 cross(const dvec3& v, const dvec3& u) noexcept {return dvec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+
+/**
+ * @brief calculate the length of a 3D double vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const dvec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline dvec3 normalize(const dvec3& v) noexcept {return v / length(v);}
 
 #endif
 

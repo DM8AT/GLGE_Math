@@ -13,8 +13,8 @@
 #ifndef _GLGE_double_dvec2_
 #define _GLGE_double_dvec2_
 
-//include the settings
-#include "../../GLGEMath_Settings.h"
+//include common utilities
+#include "../../GLGE_Common.h"
 
 //if SIMD is requested, include SIMD intrinsics
 #include "../../GLGEMath_Settings.h"
@@ -64,7 +64,7 @@ typedef struct s_dvec2 {
      * 
      * Set everything to 0
      */
-    inline s_dvec2() : x(0), y(0) {}
+    inline constexpr s_dvec2() : x(0), y(0) {}
 
     /**
      * @brief Construct a new dvec2
@@ -72,21 +72,21 @@ typedef struct s_dvec2 {
      * @param _x the value for the x axis / red channel
      * @param _y the value for the y axis / green channel
      */
-    inline s_dvec2(double _x, double _y) : x(_x), y(_y) {}
+    inline constexpr s_dvec2(double _x, double _y) : x(_x), y(_y) {}
 
     /**
      * @brief Construct a new dvec2
      * 
      * @param _xy the value for both axis / channels
      */
-    inline s_dvec2(double _xy) : x(_xy), y(_xy) {}
+    inline constexpr s_dvec2(double _xy) : x(_xy), y(_xy) {}
 
     /**
      * @brief Construct a new dvec2
      * 
      * @param _val a double array with at least 2 elements
      */
-    inline s_dvec2(double _val[2]) : vals{_val[0], _val[1]} {}
+    inline constexpr s_dvec2(double _val[2]) : vals{_val[0], _val[1]} {}
 
     //if SIMD is enabled, create a SIMD constructor
     #if GLGE_MATH_USE_SIMD
@@ -95,13 +95,8 @@ typedef struct s_dvec2 {
      * 
      * @param _simd the SIMD data to create the vector from
      */
-    inline s_dvec2(__m128d _simd) : simd(_simd) {}
+    inline constexpr s_dvec2(__m128d _simd) : simd(_simd) {}
     #endif
-
-    /**
-     * @brief Destroy the dvec2
-     */
-    inline ~s_dvec2() {}
 
     //check for SIMD to implement the vector instructions
     #if GLGE_MATH_USE_SIMD
@@ -150,7 +145,7 @@ typedef struct s_dvec2 {
      * @param u a constant reference to the other element to add
      * @return s_dvec2 the sum of both vectors
      */
-    inline s_dvec2 operator+(const s_dvec2& u) const noexcept
+    inline constexpr s_dvec2 operator+(const s_dvec2& u) const noexcept
     {return s_dvec2(x + u.x, y + u.y);}
 
     /**
@@ -159,7 +154,7 @@ typedef struct s_dvec2 {
      * @param u the vector to subtract from this vector
      * @return s_dvec2 the difference of both vectors
      */
-    inline s_dvec2 operator-(const s_dvec2& u) const noexcept
+    inline constexpr s_dvec2 operator-(const s_dvec2& u) const noexcept
     {return s_dvec2(x - u.x, y - u.y);}
 
     /**
@@ -168,7 +163,7 @@ typedef struct s_dvec2 {
      * @param u the vector to multiply to this vector
      * @return s_dvec2 the product of both vectors
      */
-    inline s_dvec2 operator*(const s_dvec2& u) const noexcept
+    inline constexpr s_dvec2 operator*(const s_dvec2& u) const noexcept
     {return s_dvec2(x * u.x, y * u.y);}
 
     /**
@@ -177,7 +172,7 @@ typedef struct s_dvec2 {
      * @param u the vector to use as denominator
      * @return s_dvec2 the fraction of both vectors
      */
-    inline s_dvec2 operator/(const s_dvec2& u) const noexcept
+    inline constexpr s_dvec2 operator/(const s_dvec2& u) const noexcept
     {return s_dvec2(x / u.x, y / u.y);}
 
     #endif
@@ -187,7 +182,7 @@ typedef struct s_dvec2 {
      * 
      * @return s_dvec2 the negated vector
      */
-    inline s_dvec2 operator-(void) const noexcept
+    inline constexpr s_dvec2 operator-(void) const noexcept
     {return s_dvec2(-x, -y);}
 
     /**
@@ -214,7 +209,23 @@ typedef struct s_dvec2 {
  * @param u the second double vector
  * @return const double the dot product of both vectors
  */
-inline double dot(const dvec2& v, const dvec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+inline constexpr double dot(const dvec2& v, const dvec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+
+/**
+ * @brief calculate the length of a 2D double vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const dvec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline dvec2 normalize(const dvec2& v) noexcept {return v / length(v);}
 
 #endif
 
