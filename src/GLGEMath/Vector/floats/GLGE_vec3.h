@@ -208,7 +208,7 @@ inline constexpr vec3 cross(const vec3& v, const vec3& u) noexcept {return vec3(
  * @param v a constant reference to the vector to calculate the length of
  * @return constexpr float the length of the vector
  */
-inline constexpr float length(const vec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
+inline float length(const vec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
 
 /**
  * @brief calculate a vector that points in the same direction 
@@ -216,7 +216,7 @@ inline constexpr float length(const vec3& v) noexcept {return glge::sqrt(v.x*v.x
  * @param v a vector to normalize
  * @return vec3 a vector pointing in the same direction as the input but with a length of 1
  */
-inline constexpr vec3 normalize(const vec3& v) noexcept {return v / length(v);}
+inline vec3 normalize(const vec3& v) noexcept {return v / length(v);}
 
 #endif
 

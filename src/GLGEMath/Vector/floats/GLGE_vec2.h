@@ -186,7 +186,7 @@ inline constexpr float dot(const vec2& v, const vec2& u) noexcept {return v.x * 
  * @param v the vector to calculate the length of
  * @return constexpr float the length of the 2D vector
  */
-inline constexpr float length(const vec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y * v.y);}
+inline float length(const vec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y * v.y);}
 
 /**
  * @brief get a vector that points in the same direction as the input but has a length of 1
@@ -194,7 +194,7 @@ inline constexpr float length(const vec2& v) noexcept {return glge::sqrt(v.x*v.x
  * @param v the vector to normalized
  * @return constexpr vec2 a vector with length 1 that points in the direction of the inputted vector
  */
-inline constexpr vec2 normalize(const vec2& v) noexcept {return v / length(v);}
+inline vec2 normalize(const vec2& v) noexcept {return v / length(v);}
 
 #endif
 

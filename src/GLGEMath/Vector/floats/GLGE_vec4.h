@@ -238,7 +238,7 @@ inline constexpr float dot(const vec4& v, const vec4& u) noexcept {return v.x * 
  * @param v a constant reference to the vector to calculate the length of
  * @return constexpr float the length of the vector
  */
-inline constexpr float length(const vec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);}
+inline float length(const vec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);}
 
 /**
  * @brief calculate a vector that points in the same direction 
@@ -246,11 +246,7 @@ inline constexpr float length(const vec4& v) noexcept {return glge::sqrt(v.x*v.x
  * @param v a vector to normalize
  * @return vec4 a vector pointing in the same direction as the input but with a length of 1
  */
-inline constexpr vec4 normalize(const vec4& v) noexcept {
-    float l = length(v); 
-    //this division is required to be fully written out as the operator/ operator is not guaranteed to be constexpr
-    return vec4(v.x / l, v.y / l, v.z / l, v.w / l);
-}
+inline vec4 normalize(const vec4& v) noexcept {return v / length(v);}
 
 #endif
 
