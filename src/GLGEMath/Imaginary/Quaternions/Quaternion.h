@@ -92,7 +92,7 @@ typedef struct s_Quaternion {
      * @param q the quaternion to add to this one
      * @return Quaternion the sum of this and the other quaternion
      */
-    inline Quaternion operator+(const Quaternion& q) const noexcept {return vec + q.vec;}
+    inline s_Quaternion operator+(const s_Quaternion& q) const noexcept {return vec + q.vec;}
 
     /**
      * @brief subtract a quaternion from this one
@@ -100,21 +100,21 @@ typedef struct s_Quaternion {
      * @param q the quaternion to subtract from this one
      * @return Quaternion the difference of the quaternions
      */
-    inline Quaternion operator-(const Quaternion& q) const noexcept {return vec - q.vec;}
+    inline s_Quaternion operator-(const s_Quaternion& q) const noexcept {return vec - q.vec;}
 
     /**
      * @brief conjugate this quaternion
      * 
      * @return Quaternion the conjugated quaternion
      */
-    inline Quaternion operator-(void) const noexcept {return Quaternion(w, -i, -j, -k);}
+    inline s_Quaternion operator-(void) const noexcept {return s_Quaternion(w, -i, -j, -k);}
 
     /**
      * @brief get the inverse (conjugation) of this quaternion
      * 
      * @return Quaternion the conjugated (inversed) quaternion
      */
-    inline Quaternion conjugate() const noexcept {return -(*this);}
+    inline s_Quaternion conjugate() const noexcept {return -(*this);}
 
     /**
      * @brief multiply two quaternions together
@@ -122,8 +122,8 @@ typedef struct s_Quaternion {
      * @param q the quaternion to multiply with
      * @return Quaternion the product of both quaternions
      */
-    inline Quaternion operator*(const Quaternion& q) const noexcept {
-        return Quaternion(
+    inline s_Quaternion operator*(const s_Quaternion& q) const noexcept {
+        return s_Quaternion(
             (w*q.w) - (i*q.i) - (j*q.j) - (k*q.k),
             (i*q.w) + (w*q.i) + (j*q.k) - (k*q.j),
             (j*q.w) + (w*q.j) + (k*q.i) - (i*q.k),
@@ -137,8 +137,8 @@ typedef struct s_Quaternion {
      * @param v the 3D vector to multiply with
      * @return Quaternion the result of the quaternion - 3D vector multiplication
      */
-    inline Quaternion operator*(const vec3& v) const noexcept {
-        return Quaternion(
+    inline s_Quaternion operator*(const vec3& v) const noexcept {
+        return s_Quaternion(
             - (x*v.x) - (y*v.y) - (z*v.z),
               (w*v.x) + (y*v.z) - (z*v.y),
               (w*v.y) + (z*v.x) - (x*v.z),
@@ -152,7 +152,7 @@ typedef struct s_Quaternion {
      * @param s the scalar to scale the quaternion with
      * @return Quaternion the scaled quaternion
      */
-    inline Quaternion operator*(float s) const noexcept {return vec * s;}
+    inline s_Quaternion operator*(float s) const noexcept {return vec * s;}
 
     /**
      * @brief scale down the quaternion by a scalar
@@ -160,7 +160,7 @@ typedef struct s_Quaternion {
      * @param s the scalar to divide all elements of the quaternion by
      * @return Quaternion the scaled down quaternion
      */
-    inline Quaternion operator/(float s) const noexcept {return vec / s;}
+    inline s_Quaternion operator/(float s) const noexcept {return vec / s;}
 
     #endif
 

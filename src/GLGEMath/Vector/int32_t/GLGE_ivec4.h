@@ -212,7 +212,7 @@ typedef struct s_ivec4 {
  * @param u the second int32_t vector
  * @return const int32_t the dot product of both vectors
  */
-inline const int32_t dot(const ivec4& v, const ivec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
+inline int32_t dot(const ivec4& v, const ivec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
 
 #endif
 

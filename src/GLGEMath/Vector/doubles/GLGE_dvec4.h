@@ -303,7 +303,7 @@ typedef struct s_dvec4 {
  * @param u the second double vector
  * @return const double the dot product of both vectors
  */
-inline const double dot(const dvec4& v, const dvec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
+inline double dot(const dvec4& v, const dvec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
 
 #endif
 

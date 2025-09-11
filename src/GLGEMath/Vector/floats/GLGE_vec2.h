@@ -13,8 +13,8 @@
 #ifndef _GLGE_FLOAT_VEC2_
 #define _GLGE_FLOAT_VEC2_
 
-//include the settings
-#include "../../GLGEMath_Settings.h"
+//include the common functoins
+#include "../../GLGE_Common.h"
 //SIMD is not worth it for small vectors (2D vectors). They are actually slower since only 128 bit vectors
 //can be used as floats, which both wasts RAM and increases the amount to add
 
@@ -54,7 +54,7 @@ typedef struct s_vec2 {
      * 
      * Set everything to 0
      */
-    s_vec2() : x(0), y(0) {}
+    inline constexpr s_vec2() : x(0), y(0) {}
 
     /**
      * @brief Construct a new vec2
@@ -62,26 +62,21 @@ typedef struct s_vec2 {
      * @param _x the value for the x axis / red channel
      * @param _y the value for the y axis / green channel
      */
-    s_vec2(float _x, float _y) : x(_x), y(_y) {}
+    inline constexpr s_vec2(float _x, float _y) : x(_x), y(_y) {}
 
     /**
      * @brief Construct a new vec2
      * 
      * @param _xy the value for both axis / channels
      */
-    s_vec2(float _xy) : x(_xy), y(_xy) {}
+    inline constexpr s_vec2(float _xy) : x(_xy), y(_xy) {}
 
     /**
      * @brief Construct a new vec2
      * 
      * @param _val a float array with at least 2 elements
      */
-    s_vec2(float _val[2]) : vals{_val[0], _val[1]} {}
-
-    /**
-     * @brief Destroy the vec2
-     */
-    ~s_vec2() {}
+    inline constexpr s_vec2(float _val[2]) : vals{_val[0], _val[1]} {}
 
     /**
      * @brief add two vectors together
@@ -89,8 +84,16 @@ typedef struct s_vec2 {
      * @param u a constant reference to the other element to add
      * @return s_vec2 the sum of both vectors
      */
-    inline s_vec2 operator+(const s_vec2& u) const noexcept
+    inline constexpr s_vec2 operator+(const s_vec2& u) const noexcept
     {return s_vec2(x + u.x, y + u.y);}
+
+    /**
+     * @brief add another vector to this vector
+     * 
+     * @param u the vector to add to this vector
+     */
+    inline constexpr void operator+=(const s_vec2& u) noexcept
+    {x += u.x; y += u.y;}
 
     /**
      * @brief subtract two vectors from another
@@ -98,15 +101,23 @@ typedef struct s_vec2 {
      * @param u the vector to subtract from this vector
      * @return s_vec2 the difference of both vectors
      */
-    inline s_vec2 operator-(const s_vec2& u) const noexcept
+    inline constexpr s_vec2 operator-(const s_vec2& u) const noexcept
     {return s_vec2(x - u.x, y - u.y);}
+
+    /**
+     * @brief subtract another vector from this vector
+     * 
+     * @param u the vector to subtract from this vector
+     */
+    inline constexpr void operator-=(const s_vec2& u) noexcept
+    {x -= u.x; y -= u.y;}
 
     /**
      * @brief negate a vector
      * 
      * @return s_vec2 the negated vector
      */
-    inline s_vec2 operator-(void) const noexcept
+    inline constexpr s_vec2 operator-(void) const noexcept
     {return s_vec2(-x, -y);}
 
     /**
@@ -115,8 +126,16 @@ typedef struct s_vec2 {
      * @param u the vector to multiply to this vector
      * @return s_vec2 the product of both vectors
      */
-    inline s_vec2 operator*(const s_vec2& u) const noexcept
+    inline constexpr s_vec2 operator*(const s_vec2& u) const noexcept
     {return s_vec2(x * u.x, y * u.y);}
+
+    /**
+     * @brief scale this vector by another vector
+     * 
+     * @param u the vector to scale with
+     */
+    inline constexpr void operator*=(const s_vec2& u) noexcept
+    {x *= u.x; y *= u.y;}
 
     /**
      * @brief divide two vectors per-element
@@ -124,8 +143,16 @@ typedef struct s_vec2 {
      * @param u the vector to use as denominator
      * @return s_vec2 the fraction of both vectors
      */
-    inline s_vec2 operator/(const s_vec2& u) const noexcept
+    inline constexpr s_vec2 operator/(const s_vec2& u) const noexcept
     {return s_vec2(x / u.x, y / u.y);}
+
+    /**
+     * @brief scale down this vector by another vector
+     * 
+     * @param u the vector to scale down with
+     */
+    inline constexpr void operator/=(const s_vec2& u) noexcept
+    {x /= u.x; y /= u.y;}
 
     /**
      * @brief print the vector to an output stream
@@ -151,7 +178,23 @@ typedef struct s_vec2 {
  * @param u the second float vector
  * @return const float the dot product of both vectors
  */
-inline const float dot(const vec2& v, const vec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+inline constexpr float dot(const vec2& v, const vec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+
+/**
+ * @brief calculate the length of a 2D vector
+ * 
+ * @param v the vector to calculate the length of
+ * @return constexpr float the length of the 2D vector
+ */
+inline constexpr float length(const vec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y * v.y);}
+
+/**
+ * @brief get a vector that points in the same direction as the input but has a length of 1
+ * 
+ * @param v the vector to normalized
+ * @return constexpr vec2 a vector with length 1 that points in the direction of the inputted vector
+ */
+inline constexpr vec2 normalize(const vec2& v) noexcept {return v / length(v);}
 
 #endif
 

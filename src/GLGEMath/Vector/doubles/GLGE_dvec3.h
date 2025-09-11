@@ -221,7 +221,7 @@ typedef struct s_dvec3 {
  * @param u the second double vector
  * @return const double the dot product of both vectors
  */
-inline const double dot(const dvec3& v, const dvec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
+inline double dot(const dvec3& v, const dvec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
 
 /**
  * @brief calculate the cross product between two 3D vectors
@@ -230,7 +230,7 @@ inline const double dot(const dvec3& v, const dvec3& u) noexcept {return v.x * u
  * @param u the second vector
  * @return const dvec3 the cross product (vector product) of both vectors
  */
-inline const dvec3 cross(const dvec3& v, const dvec3& u) noexcept {return dvec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+inline dvec3 cross(const dvec3& v, const dvec3& u) noexcept {return dvec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
 
 #endif
 

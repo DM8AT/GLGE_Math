@@ -151,7 +151,7 @@ typedef struct s_uivec2 {
  * @param u the second uint32_t vector
  * @return const uint32_t the dot product of both vectors
  */
-inline const uint32_t dot(const uivec2& v, const uivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+inline uint32_t dot(const uivec2& v, const uivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
 
 #endif
 

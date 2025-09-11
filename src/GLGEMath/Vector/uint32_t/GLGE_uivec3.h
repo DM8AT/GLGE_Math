@@ -153,7 +153,7 @@ typedef struct s_uivec3 {
  * @param u the second uint32_t vector
  * @return const uint32_t the dot product of both vectors
  */
-inline const uint32_t dot(const uivec3& v, const uivec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
+inline uint32_t dot(const uivec3& v, const uivec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
 
 /**
  * @brief calculate the cross product between two 3D vectors
@@ -162,7 +162,7 @@ inline const uint32_t dot(const uivec3& v, const uivec3& u) noexcept {return v.x
  * @param u the second vector
  * @return const uivec3 the cross product (vector product) of both vectors
  */
-inline const uivec3 cross(const uivec3& v, const uivec3& u) noexcept {return uivec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+inline uivec3 cross(const uivec3& v, const uivec3& u) noexcept {return uivec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
 
 #endif
 
