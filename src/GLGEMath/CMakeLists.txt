@@ -4,9 +4,6 @@ cmake_minimum_required(VERSION 3.10)
 # store the version for the library
 set(GLGE_MATH_VERSION 1.0.0)
 
-# Enable compiler optimizations
-set(CMAKE_CXX_FLAGS "-O3 -Wall -Wextra")
-
 # store all the source files
 set(GLGE_MATH_SRC 
         GLGE_Common.cpp
