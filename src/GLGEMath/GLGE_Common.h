@@ -34,7 +34,7 @@ namespace glge
      * @param value the value to compute the squareroot of
      * @return float the squareroot of the inputted value
      */
-    inline constexpr float sqrt(float value) noexcept(true) {return std::sqrt(value);} 
+    inline constexpr float sqrt(float value) noexcept(true) {return sqrtf(value);} 
 
 };
 
