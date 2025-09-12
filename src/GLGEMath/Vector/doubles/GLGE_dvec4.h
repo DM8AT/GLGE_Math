@@ -28,6 +28,11 @@
 #endif
 #endif
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store a 4D vector of doubles
  */
@@ -321,11 +326,6 @@ inline float length(const dvec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.
  */
 inline dvec4 normalize(const dvec4& v) noexcept {return v / length(v);}
 
-#endif
-
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
 #endif
 
 /**

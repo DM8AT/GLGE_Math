@@ -24,6 +24,11 @@
 #include <xmmintrin.h>
 #endif
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store a 4D vector of floats
  */
@@ -248,11 +253,6 @@ inline float length(const vec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y
  */
 inline vec4 normalize(const vec4& v) noexcept {return v / length(v);}
 
-#endif
-
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
 #endif
 
 /**

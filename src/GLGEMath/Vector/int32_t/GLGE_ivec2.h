@@ -23,6 +23,11 @@
 #include <iostream>
 #endif
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store a simple 2D vector
  */
@@ -164,11 +169,6 @@ inline float length(const ivec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.
  */
 inline ivec2 normalize(const ivec2& v) noexcept {return v / length(v);}
 
-#endif
-
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
 #endif
 
 /**

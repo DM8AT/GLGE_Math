@@ -22,6 +22,11 @@
 #include <xmmintrin.h>
 #endif
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store a 3D vector of doubles
  */
@@ -248,11 +253,6 @@ inline float length(const dvec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.
  */
 inline dvec3 normalize(const dvec3& v) noexcept {return v / length(v);}
 
-#endif
-
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
 #endif
 
 /**

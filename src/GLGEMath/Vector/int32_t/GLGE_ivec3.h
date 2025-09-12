@@ -19,6 +19,11 @@
 //intrinsics are not available for 3D int32_t vectors because no intrinsic type fits to the size of 3D vectors
 //loading to the intrinsics for each operation takes too much time
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store a 3D vector of int32_ts
  */
@@ -179,11 +184,6 @@ inline float length(const ivec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.
  */
 inline ivec3 normalize(const ivec3& v) noexcept {return v / length(v);}
 
-#endif
-
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
 #endif
 
 /**

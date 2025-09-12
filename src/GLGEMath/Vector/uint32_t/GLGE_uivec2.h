@@ -13,14 +13,19 @@
 #ifndef _GLGE_uint32_t_uivec2_
 #define _GLGE_uint32_t_uivec2_
 
-//include the settings
-#include "../../GLGEMath_Settings.h"
+//include the common stuff
+#include "../../GLGE_Common.h"
 //SIMD is not worth it for small vectors (2D vectors). They are actually slower since only 128 bit vectors
 //can be used as uint32_ts, which both wasts RAM and increases the amount to add
 
 //for C++ add the iostream library for print operators
 #if __cplusplus
 #include <iostream>
+#endif
+
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
 #endif
 
 /**
@@ -54,7 +59,7 @@ typedef struct s_uivec2 {
      * 
      * Set everything to 0
      */
-    s_uivec2() : x(0), y(0) {}
+    inline constexpr s_uivec2() : x(0), y(0) {}
 
     /**
      * @brief Construct a new uivec2
@@ -62,26 +67,21 @@ typedef struct s_uivec2 {
      * @param _x the value for the x axis / red channel
      * @param _y the value for the y axis / green channel
      */
-    s_uivec2(uint32_t _x, uint32_t _y) : x(_x), y(_y) {}
+    inline constexpr s_uivec2(uint32_t _x, uint32_t _y) : x(_x), y(_y) {}
 
     /**
      * @brief Construct a new uivec2
      * 
      * @param _xy the value for both axis / channels
      */
-    s_uivec2(uint32_t _xy) : x(_xy), y(_xy) {}
+    inline constexpr s_uivec2(uint32_t _xy) : x(_xy), y(_xy) {}
 
     /**
      * @brief Construct a new uivec2
      * 
      * @param _val a uint32_t array with at least 2 elements
      */
-    s_uivec2(uint32_t _val[2]) : vals{_val[0], _val[1]} {}
-
-    /**
-     * @brief Destroy the uivec2
-     */
-    ~s_uivec2() {}
+    inline constexpr s_uivec2(uint32_t _val[2]) : vals{_val[0], _val[1]} {}
 
     /**
      * @brief add two vectors together
@@ -89,7 +89,7 @@ typedef struct s_uivec2 {
      * @param u a constant reference to the other element to add
      * @return s_uivec2 the sum of both vectors
      */
-    inline s_uivec2 operator+(const s_uivec2& u) const noexcept
+    inline constexpr s_uivec2 operator+(const s_uivec2& u) const noexcept
     {return s_uivec2(x + u.x, y + u.y);}
 
     /**
@@ -98,7 +98,7 @@ typedef struct s_uivec2 {
      * @param u the vector to subtract from this vector
      * @return s_uivec2 the difference of both vectors
      */
-    inline s_uivec2 operator-(const s_uivec2& u) const noexcept
+    inline constexpr s_uivec2 operator-(const s_uivec2& u) const noexcept
     {return s_uivec2(x - u.x, y - u.y);}
 
     /**
@@ -106,7 +106,7 @@ typedef struct s_uivec2 {
      * 
      * @return s_uivec2 the negated vector
      */
-    inline s_uivec2 operator-(void) const noexcept
+    inline constexpr s_uivec2 operator-(void) const noexcept
     {return s_uivec2(-x, -y);}
 
     /**
@@ -115,7 +115,7 @@ typedef struct s_uivec2 {
      * @param u the vector to multiply to this vector
      * @return s_uivec2 the product of both vectors
      */
-    inline s_uivec2 operator*(const s_uivec2& u) const noexcept
+    inline constexpr s_uivec2 operator*(const s_uivec2& u) const noexcept
     {return s_uivec2(x * u.x, y * u.y);}
 
     /**
@@ -124,7 +124,7 @@ typedef struct s_uivec2 {
      * @param u the vector to use as denominator
      * @return s_uivec2 the fraction of both vectors
      */
-    inline s_uivec2 operator/(const s_uivec2& u) const noexcept
+    inline constexpr s_uivec2 operator/(const s_uivec2& u) const noexcept
     {return s_uivec2(x / u.x, y / u.y);}
 
     /**
@@ -151,13 +151,24 @@ typedef struct s_uivec2 {
  * @param u the second uint32_t vector
  * @return const uint32_t the dot product of both vectors
  */
-inline uint32_t dot(const uivec2& v, const uivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+inline constexpr uint32_t dot(const uivec2& v, const uivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
 
-#endif
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const uivec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
 
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline uivec2 normalize(const uivec2& v) noexcept {return v / length(v);}
+
 #endif
 
 /**
