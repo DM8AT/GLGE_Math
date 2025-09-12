@@ -49,9 +49,8 @@ typedef struct s_ivec3 {
 
     /**
      * @brief Construct a new ivec3
-     * 
      */
-    inline s_ivec3() : x(0), y(0), z(0) {}
+    inline constexpr s_ivec3() : x(0), y(0), z(0) {}
 
     /**
      * @brief Construct a new ivec3
@@ -60,14 +59,14 @@ typedef struct s_ivec3 {
      * @param _y the value for the y axis / green channel
      * @param _z the value for the z axis / blue channel
      */
-    inline s_ivec3(int32_t _x, int32_t _y, int32_t _z) : x(_x), y(_y), z(_z) {}
+    inline constexpr s_ivec3(int32_t _x, int32_t _y, int32_t _z) : x(_x), y(_y), z(_z) {}
 
     /**
      * @brief Construct a new ivec3
      * 
      * @param xyz the value for the x, y and z axis as well as for the red, green and blue channel
      */
-    inline s_ivec3(int32_t xyz) : x(xyz), y(xyz), z(xyz) {}
+    inline constexpr s_ivec3(int32_t xyz) : x(xyz), y(xyz), z(xyz) {}
 
     /**
      * @brief Construct a new ivec3
@@ -75,7 +74,7 @@ typedef struct s_ivec3 {
      * @param xy the values for the x and y axis / red and green channel
      * @param _z the value for the z axis / blue channel
      */
-    inline s_ivec3(const ivec2& xy, int32_t _z) : x(xy.x), y(xy.y), z(_z) {}
+    inline constexpr s_ivec3(const ivec2& xy, int32_t _z) : x(xy.x), y(xy.y), z(_z) {}
 
     /**
      * @brief Construct a new ivec3
@@ -83,7 +82,7 @@ typedef struct s_ivec3 {
      * @param _x the value for the x axis / red channel
      * @param yz the value for the y and z axis / green and blue channel
      */
-    inline s_ivec3(int32_t _x, const ivec2& yz) : x(_x), y(yz.x), z(yz.y) {}
+    inline constexpr s_ivec3(int32_t _x, const ivec2& yz) : x(_x), y(yz.x), z(yz.y) {}
 
     /**
      * @brief add two 3D int32_t vectors together
@@ -91,7 +90,7 @@ typedef struct s_ivec3 {
      * @param u the second vector to add to this one
      * @return const s_ivec3 the sum of both vectors
      */
-    inline s_ivec3 operator+(const s_ivec3& u) const noexcept
+    inline constexpr s_ivec3 operator+(const s_ivec3& u) const noexcept
     {return s_ivec3(x + u.x, y + u.y, z + u.z);}
 
     /**
@@ -100,7 +99,7 @@ typedef struct s_ivec3 {
      * @param u the vector to subtract from this one
      * @return const s_ivec3 the difference of both vectors
      */
-    inline s_ivec3 operator-(const s_ivec3& u) const noexcept
+    inline constexpr s_ivec3 operator-(const s_ivec3& u) const noexcept
     {return s_ivec3(x - u.x, y - u.y, z - u.z);}
 
     /**
@@ -109,7 +108,7 @@ typedef struct s_ivec3 {
      * @param u the vector to multiply to this one
      * @return s_ivec3 the product of both vectors
      */
-    inline s_ivec3 operator*(const s_ivec3& u) const noexcept
+    inline constexpr s_ivec3 operator*(const s_ivec3& u) const noexcept
     {return s_ivec3(x * u.x, y * u.y, z * u.z);}
 
     /**
@@ -118,7 +117,7 @@ typedef struct s_ivec3 {
      * @param u the vector to use as the denominator
      * @return s_ivec3 the fraction of both vectors
      */
-    inline s_ivec3 operator/(const s_ivec3& u) const noexcept
+    inline constexpr s_ivec3 operator/(const s_ivec3& u) const noexcept
     {return s_ivec3(x / u.x, y / u.y, z / u.z);}
 
     /**
@@ -126,7 +125,7 @@ typedef struct s_ivec3 {
      * 
      * @return s_ivec3 the negated vector
      */
-    inline s_ivec3 operator-(void)  const noexcept
+    inline constexpr s_ivec3 operator-(void)  const noexcept
     {return s_ivec3(-x,-y,-z);}
 
     /**
@@ -153,7 +152,7 @@ typedef struct s_ivec3 {
  * @param u the second int32_t vector
  * @return const int32_t the dot product of both vectors
  */
-inline int32_t dot(const ivec3& v, const ivec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
+inline constexpr int32_t dot(const ivec3& v, const ivec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
 
 /**
  * @brief calculate the cross product between two 3D vectors
@@ -162,7 +161,23 @@ inline int32_t dot(const ivec3& v, const ivec3& u) noexcept {return v.x * u.x + 
  * @param u the second vector
  * @return const ivec3 the cross product (vector product) of both vectors
  */
-inline ivec3 cross(const ivec3& v, const ivec3& u) noexcept {return ivec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+inline constexpr ivec3 cross(const ivec3& v, const ivec3& u) noexcept {return ivec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const ivec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline ivec3 normalize(const ivec3& v) noexcept {return v / length(v);}
 
 #endif
 

@@ -24,6 +24,11 @@
 #include <xmmintrin.h>
 #endif
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store a 4D vector of int32_ts
  */
@@ -62,9 +67,8 @@ typedef struct s_ivec4 {
 
     /**
      * @brief Construct a new ivec4
-     * 
      */
-    inline s_ivec4() : x(0), y(0), z(0), w(0) {}
+    inline constexpr s_ivec4() : x(0), y(0), z(0), w(0) {}
 
     /**
      * @brief Construct a new ivec4
@@ -74,14 +78,14 @@ typedef struct s_ivec4 {
      * @param _z the value for the z axis / blue channel
      * @param _w the value for the w axis / alpha channel
      */
-    inline s_ivec4(int32_t _x, int32_t _y, int32_t _z, int32_t _w) : x(_x), y(_y), z(_z), w(_w) {}
+    inline constexpr s_ivec4(int32_t _x, int32_t _y, int32_t _z, int32_t _w) : x(_x), y(_y), z(_z), w(_w) {}
 
     /**
      * @brief Construct a new ivec4
      * 
      * @param xyzw the value for the x, y, z and w axis as well as for the red, green, blue and alpha channel
      */
-    inline s_ivec4(int32_t xyzw) : x(xyzw), y(xyzw), z(xyzw), w(xyzw) {}
+    inline constexpr s_ivec4(int32_t xyzw) : x(xyzw), y(xyzw), z(xyzw), w(xyzw) {}
 
     /**
      * @brief Construct a new ivec4
@@ -89,7 +93,7 @@ typedef struct s_ivec4 {
      * @param xy the values for the x and y axis / red and green channel
      * @param zw the value for the z and w axis / blue and alpha channel
      */
-    inline s_ivec4(const ivec2& xy, const ivec2& zw) : x(xy.x), y(xy.y), z(zw.x), w(zw.y) {}
+    inline constexpr s_ivec4(const ivec2& xy, const ivec2& zw) : x(xy.x), y(xy.y), z(zw.x), w(zw.y) {}
 
     /**
      * @brief Construct a new ivec4
@@ -97,7 +101,7 @@ typedef struct s_ivec4 {
      * @param xyz the value for the x, y and z axis / red, green and blue channel
      * @param _w the value for the w axis / alpha channel
      */
-    inline s_ivec4(const ivec3& xyz, int32_t _w) : x(xyz.x), y(xyz.y), z(xyz.z), w(_w) {}
+    inline constexpr s_ivec4(const ivec3& xyz, int32_t _w) : x(xyz.x), y(xyz.y), z(xyz.z), w(_w) {}
     
     /**
      * @brief Construct a new ivec4
@@ -105,7 +109,7 @@ typedef struct s_ivec4 {
      * @param _x the value for the x axis / red channel
      * @param yzw the values for the y, z and w axis / green, blue and alpha channel
      */
-    inline s_ivec4(int32_t _x, const ivec3& yzw) : x(_x), y(yzw.x), z(yzw.y), w(yzw.z) {}
+    inline constexpr s_ivec4(int32_t _x, const ivec3& yzw) : x(_x), y(yzw.x), z(yzw.y), w(yzw.z) {}
 
     //only implement the SIMD constructor if SIMD is enabled
     #if GLGE_MATH_USE_SIMD
@@ -115,7 +119,7 @@ typedef struct s_ivec4 {
      * 
      * @param _simd the values for the simd processing
      */
-    inline s_ivec4(const __m128i& _simd) : simd(_simd) {}
+    inline constexpr s_ivec4(const __m128i& _simd) : simd(_simd) {}
 
     #endif
 
@@ -148,7 +152,7 @@ typedef struct s_ivec4 {
      * @param u the second vector to add to this one
      * @return const s_ivec4 the sum of both vectors
      */
-    inline s_ivec4 operator+(const s_ivec4& u) const noexcept
+    inline constexpr s_ivec4 operator+(const s_ivec4& u) const noexcept
     {return s_ivec4(x + u.x, y + u.y, z + u.z, w + u.w);}
 
     /**
@@ -157,7 +161,7 @@ typedef struct s_ivec4 {
      * @param u the vector to subtract from this one
      * @return const s_ivec4 the difference of both vectors
      */
-    inline s_ivec4 operator-(const s_ivec4& u) const noexcept
+    inline constexpr s_ivec4 operator-(const s_ivec4& u) const noexcept
     {return s_ivec4(x - u.x, y - u.y, z - u.z, w - u.w);}
 
     #endif
@@ -168,7 +172,7 @@ typedef struct s_ivec4 {
      * @param u the vector to multiply to this one
      * @return s_ivec4 the product of both vectors
      */
-    inline s_ivec4 operator*(const s_ivec4& u) const noexcept
+    inline constexpr s_ivec4 operator*(const s_ivec4& u) const noexcept
     {return s_ivec4(x * u.x, y * u.y, z * u.z, w * u.w);}
 
     /**
@@ -177,7 +181,7 @@ typedef struct s_ivec4 {
      * @param u the vector to use as the denominator
      * @return s_ivec4 the fraction of both vectors
      */
-    inline s_ivec4 operator/(const s_ivec4& u) const noexcept
+    inline constexpr s_ivec4 operator/(const s_ivec4& u) const noexcept
     {return s_ivec4(x / u.x, y / u.y, z / u.z, w / u.w);}
 
     /**
@@ -185,7 +189,7 @@ typedef struct s_ivec4 {
      * 
      * @return s_ivec4 the negated vector
      */
-    inline s_ivec4 operator-(void)  const noexcept
+    inline constexpr s_ivec4 operator-(void)  const noexcept
     {return s_ivec4(-x,-y,-z,-w);}
 
     /**
@@ -214,11 +218,22 @@ typedef struct s_ivec4 {
  */
 inline int32_t dot(const ivec4& v, const ivec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
 
-#endif
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const ivec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);}
 
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline ivec4 normalize(const ivec4& v) noexcept {return v / length(v);}
+
 #endif
 
 /**

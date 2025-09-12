@@ -13,8 +13,8 @@
 #ifndef _GLGE_int32_t_ivec2_
 #define _GLGE_int32_t_ivec2_
 
-//include the settings
-#include "../../GLGEMath_Settings.h"
+//include the common functionality
+#include "../../GLGE_Common.h"
 //SIMD is not worth it for small vectors (2D vectors). They are actually slower since only 128 bit vectors
 //can be used as int32_ts, which both wasts RAM and increases the amount to add
 
@@ -54,7 +54,7 @@ typedef struct s_ivec2 {
      * 
      * Set everything to 0
      */
-    s_ivec2() : x(0), y(0) {}
+    constexpr s_ivec2() : x(0), y(0) {}
 
     /**
      * @brief Construct a new ivec2
@@ -62,26 +62,21 @@ typedef struct s_ivec2 {
      * @param _x the value for the x axis / red channel
      * @param _y the value for the y axis / green channel
      */
-    s_ivec2(int32_t _x, int32_t _y) : x(_x), y(_y) {}
+    constexpr s_ivec2(int32_t _x, int32_t _y) : x(_x), y(_y) {}
 
     /**
      * @brief Construct a new ivec2
      * 
      * @param _xy the value for both axis / channels
      */
-    s_ivec2(int32_t _xy) : x(_xy), y(_xy) {}
+    constexpr s_ivec2(int32_t _xy) : x(_xy), y(_xy) {}
 
     /**
      * @brief Construct a new ivec2
      * 
      * @param _val a int32_t array with at least 2 elements
      */
-    s_ivec2(int32_t _val[2]) : vals{_val[0], _val[1]} {}
-
-    /**
-     * @brief Destroy the ivec2
-     */
-    ~s_ivec2() {}
+    constexpr s_ivec2(int32_t _val[2]) : vals{_val[0], _val[1]} {}
 
     /**
      * @brief add two vectors together
@@ -89,7 +84,7 @@ typedef struct s_ivec2 {
      * @param u a constant reference to the other element to add
      * @return s_ivec2 the sum of both vectors
      */
-    inline s_ivec2 operator+(const s_ivec2& u) const noexcept
+    inline constexpr s_ivec2 operator+(const s_ivec2& u) const noexcept
     {return s_ivec2(x + u.x, y + u.y);}
 
     /**
@@ -98,7 +93,7 @@ typedef struct s_ivec2 {
      * @param u the vector to subtract from this vector
      * @return s_ivec2 the difference of both vectors
      */
-    inline s_ivec2 operator-(const s_ivec2& u) const noexcept
+    inline constexpr s_ivec2 operator-(const s_ivec2& u) const noexcept
     {return s_ivec2(x - u.x, y - u.y);}
 
     /**
@@ -106,7 +101,7 @@ typedef struct s_ivec2 {
      * 
      * @return s_ivec2 the negated vector
      */
-    inline s_ivec2 operator-(void) const noexcept
+    inline constexpr s_ivec2 operator-(void) const noexcept
     {return s_ivec2(-x, -y);}
 
     /**
@@ -115,7 +110,7 @@ typedef struct s_ivec2 {
      * @param u the vector to multiply to this vector
      * @return s_ivec2 the product of both vectors
      */
-    inline s_ivec2 operator*(const s_ivec2& u) const noexcept
+    inline constexpr s_ivec2 operator*(const s_ivec2& u) const noexcept
     {return s_ivec2(x * u.x, y * u.y);}
 
     /**
@@ -124,7 +119,7 @@ typedef struct s_ivec2 {
      * @param u the vector to use as denominator
      * @return s_ivec2 the fraction of both vectors
      */
-    inline s_ivec2 operator/(const s_ivec2& u) const noexcept
+    inline constexpr s_ivec2 operator/(const s_ivec2& u) const noexcept
     {return s_ivec2(x / u.x, y / u.y);}
 
     /**
@@ -151,7 +146,23 @@ typedef struct s_ivec2 {
  * @param u the second int32_t vector
  * @return const int32_t the dot product of both vectors
  */
-inline int32_t dot(const ivec2& v, const ivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+inline constexpr int32_t dot(const ivec2& v, const ivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const ivec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline ivec2 normalize(const ivec2& v) noexcept {return v / length(v);}
 
 #endif
 
