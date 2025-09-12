@@ -127,49 +127,9 @@ typedef struct s_uivec2 {
     inline constexpr s_uivec2 operator/(const s_uivec2& u) const noexcept
     {return s_uivec2(x / u.x, y / u.y);}
 
-    /**
-     * @brief print the vector to an output stream
-     * 
-     * @param os the output stream to fill
-     * @param v the vector to print to the output stream
-     * @return std::ostream& the filled output stream
-     */
-    inline friend std::ostream& operator<< (std::ostream& os, const s_uivec2& v) noexcept
-    {return os << "(" << v.x << ", " << v.y << ")";}
-
     #endif
 
 } uivec2;
-
-//add the C++ specific functions
-#if __cplusplus
-
-/**
- * @brief calculate the dot product of two 2D uint32_t vectors
- * 
- * @param v the first uint32_t vector
- * @param u the second uint32_t vector
- * @return const uint32_t the dot product of both vectors
- */
-inline constexpr uint32_t dot(const uivec2& v, const uivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
-
-/**
- * @brief calculate the length of a 3D vector
- * 
- * @param v a constant reference to the vector to calculate the length of
- * @return constexpr float the length of the vector
- */
-inline float length(const uivec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
-
-/**
- * @brief calculate a vector that points in the same direction 
- * 
- * @param v a vector to normalize
- * @return vec3 a vector pointing in the same direction as the input but with a length of 1
- */
-inline uivec2 normalize(const uivec2& v) noexcept {return v / length(v);}
-
-#endif
 
 /**
  * @brief add two 2D uint32_t vectors together
@@ -224,9 +184,45 @@ uivec2 uivec2_divide(uivec2 v, uivec2 u);
  */
 uint32_t uivec2_dot(uivec2 v, uivec2 u);
 
-//end a potential C section
+//end a potential C section and add the C++ specific functions
 #if __cplusplus
 }
+
+/**
+ * @brief print the vector to an output stream
+ * 
+ * @param os the output stream to fill
+ * @param v the vector to print to the output stream
+ * @return std::ostream& the filled output stream
+ */
+inline std::ostream& operator<< (std::ostream& os, const s_uivec2& v) noexcept
+{return os << "(" << v.x << ", " << v.y << ")";}
+
+/**
+ * @brief calculate the dot product of two 2D uint32_t vectors
+ * 
+ * @param v the first uint32_t vector
+ * @param u the second uint32_t vector
+ * @return const uint32_t the dot product of both vectors
+ */
+inline constexpr uint32_t dot(const uivec2& v, const uivec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const uivec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline uivec2 normalize(const uivec2& v) noexcept {return v / length(v);}
+
 #endif
 
 #endif

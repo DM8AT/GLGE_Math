@@ -190,49 +190,9 @@ typedef struct s_dvec2 {
     inline constexpr s_dvec2 operator-(void) const noexcept
     {return s_dvec2(-x, -y);}
 
-    /**
-     * @brief print the vector to an output stream
-     * 
-     * @param os the output stream to fill
-     * @param v the vector to print to the output stream
-     * @return std::ostream& the filled output stream
-     */
-    inline friend std::ostream& operator<< (std::ostream& os, const s_dvec2& v) noexcept
-    {return os << "(" << v.x << ", " << v.y << ")";}
-
     #endif
 
 } dvec2;
-
-//add the C++ specific functions
-#if __cplusplus
-
-/**
- * @brief calculate the dot product of two 2D double vectors
- * 
- * @param v the first double vector
- * @param u the second double vector
- * @return const double the dot product of both vectors
- */
-inline constexpr double dot(const dvec2& v, const dvec2& u) noexcept {return v.x * u.x + v.y * u.y;}
-
-/**
- * @brief calculate the length of a 2D double vector
- * 
- * @param v a constant reference to the vector to calculate the length of
- * @return constexpr float the length of the vector
- */
-inline float length(const dvec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
-
-/**
- * @brief calculate a vector that points in the same direction 
- * 
- * @param v a vector to normalize
- * @return vec3 a vector pointing in the same direction as the input but with a length of 1
- */
-inline dvec2 normalize(const dvec2& v) noexcept {return v / length(v);}
-
-#endif
 
 /**
  * @brief add two 2D double vectors together
@@ -287,9 +247,46 @@ dvec2 dvec2_divide(dvec2 v, dvec2 u);
  */
 double dvec2_dot(dvec2 v, dvec2 u);
 
-//end a potential C section
+//end a potential C section and add the C++ specific functions
 #if __cplusplus
 }
+
+/**
+ * @brief print the vector to an output stream
+ * 
+ * @param os the output stream to fill
+ * @param v the vector to print to the output stream
+ * @return std::ostream& the filled output stream
+ */
+inline std::ostream& operator<< (std::ostream& os, const s_dvec2& v) noexcept
+{return os << "(" << v.x << ", " << v.y << ")";}
+
+/**
+ * @brief calculate the dot product of two 2D double vectors
+ * 
+ * @param v the first double vector
+ * @param u the second double vector
+ * @return const double the dot product of both vectors
+ */
+inline constexpr double dot(const dvec2& v, const dvec2& u) noexcept {return v.x * u.x + v.y * u.y;}
+
+/**
+ * @brief calculate the length of a 2D double vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const dvec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline dvec2 normalize(const dvec2& v) noexcept {return v / length(v);}
+
 #endif
+
 
 #endif

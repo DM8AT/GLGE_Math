@@ -24,6 +24,11 @@
 #include <xmmintrin.h>
 #endif
 
+// make the C functions available for C
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store a 4D vector of uint32_ts
  */
@@ -188,54 +193,9 @@ typedef struct s_uivec4 {
     inline constexpr s_uivec4 operator-(void)  const noexcept
     {return s_uivec4(-x,-y,-z,-w);}
 
-    /**
-     * @brief print a 4D vector into an output stream
-     * 
-     * @param os the output output stream to fill
-     * @param u the 4D uint32_t vector to put into the output stream
-     * @return std::ostream& the filled output stream
-     */
-    inline friend std::ostream& operator<<(std::ostream& os, const s_uivec4& u) noexcept
-    {return os << "(" << u.x << ", " << u.y << ", " << u.z << ", " << u.w << ")";}
-
     #endif
 
 } uivec4;
-
-//add the C++ specific functions
-#if __cplusplus
-
-/**
- * @brief calculate the dot product of two 2D uint32_t vectors
- * 
- * @param v the first uint32_t vector
- * @param u the second uint32_t vector
- * @return const uint32_t the dot product of both vectors
- */
-inline constexpr uint32_t dot(const uivec4& v, const uivec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
-
-/**
- * @brief calculate the length of a 3D vector
- * 
- * @param v a constant reference to the vector to calculate the length of
- * @return constexpr float the length of the vector
- */
-inline float length(const uivec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);}
-
-/**
- * @brief calculate a vector that points in the same direction 
- * 
- * @param v a vector to normalize
- * @return vec3 a vector pointing in the same direction as the input but with a length of 1
- */
-inline uivec4 normalize(const uivec4& v) noexcept {return v / length(v);}
-
-#endif
-
-// make the C functions available for C
-#if __cplusplus
-extern "C" {
-#endif
 
 /**
  * @brief add two 4D uint32_t vectors together
@@ -290,9 +250,45 @@ uivec4 uivec4_divide(uivec4 v, uivec4 u);
  */
 uint32_t uivec4_dot(uivec4 v, uivec4 u);
 
-//end a potential C section
+//end a potential C section and add the C++ specific functions
 #if __cplusplus
 }
+
+/**
+ * @brief print a 4D vector into an output stream
+ * 
+ * @param os the output output stream to fill
+ * @param u the 4D uint32_t vector to put into the output stream
+ * @return std::ostream& the filled output stream
+ */
+inline std::ostream& operator<<(std::ostream& os, const s_uivec4& u) noexcept
+{return os << "(" << u.x << ", " << u.y << ", " << u.z << ", " << u.w << ")";}
+
+/**
+ * @brief calculate the dot product of two 2D uint32_t vectors
+ * 
+ * @param v the first uint32_t vector
+ * @param u the second uint32_t vector
+ * @return const uint32_t the dot product of both vectors
+ */
+inline constexpr uint32_t dot(const uivec4& v, const uivec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
+
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const uivec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline uivec4 normalize(const uivec4& v) noexcept {return v / length(v);}
+
 #endif
 
 #endif

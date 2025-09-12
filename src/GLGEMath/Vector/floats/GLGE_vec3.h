@@ -172,58 +172,9 @@ typedef struct s_vec3 {
     inline constexpr void operator/=(const s_vec3& u) noexcept
     {x /= u.x; y /= u.y; z /= u.z;}
 
-    /**
-     * @brief print a 3D vector into an output stream
-     * 
-     * @param os the output output stream to fill
-     * @param u the 3D float vector to put into the output stream
-     * @return std::ostream& the filled output stream
-     */
-    inline friend std::ostream& operator<<(std::ostream& os, const s_vec3& u) noexcept
-    {return os << "(" << u.x << ", " << u.y << ", " << u.z << ")";}
-
     #endif
 
 } vec3;
-
-//add the C++ specific functions
-#if __cplusplus
-
-/**
- * @brief calculate the dot product of two 2D float vectors
- * 
- * @param v the first float vector
- * @param u the second float vector
- * @return const float the dot product of both vectors
- */
-inline constexpr float dot(const vec3& v, const vec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
-
-/**
- * @brief calculate the cross product between two 3D vectors
- * 
- * @param v the first vector
- * @param u the second vector
- * @return const vec3 the cross product (vector product) of both vectors
- */
-inline constexpr vec3 cross(const vec3& v, const vec3& u) noexcept {return vec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
-
-/**
- * @brief calculate the length of a 3D vector
- * 
- * @param v a constant reference to the vector to calculate the length of
- * @return constexpr float the length of the vector
- */
-inline float length(const vec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
-
-/**
- * @brief calculate a vector that points in the same direction 
- * 
- * @param v a vector to normalize
- * @return vec3 a vector pointing in the same direction as the input but with a length of 1
- */
-inline vec3 normalize(const vec3& v) noexcept {return v / length(v);}
-
-#endif
 
 /**
  * @brief add two 3D float vectors together
@@ -287,9 +238,54 @@ float vec3_dot(vec3 v, vec3 u);
  */
 vec3 vec3_cross(vec3 v, vec3 u);
 
-//end a potential C section
+//end a potential C section and add the C++ specific functions
 #if __cplusplus
 }
+
+/**
+ * @brief print a 3D vector into an output stream
+ * 
+ * @param os the output output stream to fill
+ * @param u the 3D float vector to put into the output stream
+ * @return std::ostream& the filled output stream
+ */
+inline std::ostream& operator<<(std::ostream& os, const s_vec3& u) noexcept
+{return os << "(" << u.x << ", " << u.y << ", " << u.z << ")";}
+
+/**
+ * @brief calculate the dot product of two 2D float vectors
+ * 
+ * @param v the first float vector
+ * @param u the second float vector
+ * @return const float the dot product of both vectors
+ */
+inline constexpr float dot(const vec3& v, const vec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
+
+/**
+ * @brief calculate the cross product between two 3D vectors
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return const vec3 the cross product (vector product) of both vectors
+ */
+inline constexpr vec3 cross(const vec3& v, const vec3& u) noexcept {return vec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const vec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline vec3 normalize(const vec3& v) noexcept {return v / length(v);}
+
 #endif
 
 #endif

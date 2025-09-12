@@ -134,58 +134,9 @@ typedef struct s_uivec3 {
     inline constexpr s_uivec3 operator-(void)  const noexcept
     {return s_uivec3(-x,-y,-z);}
 
-    /**
-     * @brief print a 3D vector into an output stream
-     * 
-     * @param os the output output stream to fill
-     * @param u the 3D uint32_t vector to put into the output stream
-     * @return std::ostream& the filled output stream
-     */
-    inline friend std::ostream& operator<<(std::ostream& os, const s_uivec3& u) noexcept
-    {return os << "(" << u.x << ", " << u.y << ", " << u.z << ")";}
-
     #endif
 
 } uivec3;
-
-//add the C++ specific functions
-#if __cplusplus
-
-/**
- * @brief calculate the dot product of two 2D uint32_t vectors
- * 
- * @param v the first uint32_t vector
- * @param u the second uint32_t vector
- * @return const uint32_t the dot product of both vectors
- */
-inline constexpr uint32_t dot(const uivec3& v, const uivec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
-
-/**
- * @brief calculate the cross product between two 3D vectors
- * 
- * @param v the first vector
- * @param u the second vector
- * @return const uivec3 the cross product (vector product) of both vectors
- */
-inline constexpr uivec3 cross(const uivec3& v, const uivec3& u) noexcept {return uivec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
-
-/**
- * @brief calculate the length of a 3D vector
- * 
- * @param v a constant reference to the vector to calculate the length of
- * @return constexpr float the length of the vector
- */
-inline float length(const uivec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
-
-/**
- * @brief calculate a vector that points in the same direction 
- * 
- * @param v a vector to normalize
- * @return vec3 a vector pointing in the same direction as the input but with a length of 1
- */
-inline uivec3 normalize(const uivec3& v) noexcept {return v / length(v);}
-
-#endif
 
 /**
  * @brief add two 3D uint32_t vectors together
@@ -249,9 +200,54 @@ uint32_t uivec3_dot(uivec3 v, uivec3 u);
  */
 uivec3 uivec3_cross(uivec3 v, uivec3 u);
 
-//end a potential C section
+//end a potential C section and add the C++ specific functions
 #if __cplusplus
 }
+
+/**
+ * @brief print a 3D vector into an output stream
+ * 
+ * @param os the output output stream to fill
+ * @param u the 3D uint32_t vector to put into the output stream
+ * @return std::ostream& the filled output stream
+ */
+inline std::ostream& operator<<(std::ostream& os, const s_uivec3& u) noexcept
+{return os << "(" << u.x << ", " << u.y << ", " << u.z << ")";}
+
+/**
+ * @brief calculate the dot product of two 2D uint32_t vectors
+ * 
+ * @param v the first uint32_t vector
+ * @param u the second uint32_t vector
+ * @return const uint32_t the dot product of both vectors
+ */
+inline constexpr uint32_t dot(const uivec3& v, const uivec3& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z;}
+
+/**
+ * @brief calculate the cross product between two 3D vectors
+ * 
+ * @param v the first vector
+ * @param u the second vector
+ * @return const uivec3 the cross product (vector product) of both vectors
+ */
+inline constexpr uivec3 cross(const uivec3& v, const uivec3& u) noexcept {return uivec3(v.y*u.z - v.z*u.y, v.x*u.z - v.z*u.x, v.x*u.y - v.y*u.x);}
+
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const uivec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline uivec3 normalize(const uivec3& v) noexcept {return v / length(v);}
+
 #endif
 
 #endif

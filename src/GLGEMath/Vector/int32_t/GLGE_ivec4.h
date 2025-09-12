@@ -192,49 +192,9 @@ typedef struct s_ivec4 {
     inline constexpr s_ivec4 operator-(void)  const noexcept
     {return s_ivec4(-x,-y,-z,-w);}
 
-    /**
-     * @brief print a 4D vector into an output stream
-     * 
-     * @param os the output output stream to fill
-     * @param u the 4D int32_t vector to put into the output stream
-     * @return std::ostream& the filled output stream
-     */
-    inline friend std::ostream& operator<<(std::ostream& os, const s_ivec4& u) noexcept
-    {return os << "(" << u.x << ", " << u.y << ", " << u.z << ", " << u.w << ")";}
-
     #endif
 
 } ivec4;
-
-//add the C++ specific functions
-#if __cplusplus
-
-/**
- * @brief calculate the dot product of two 2D int32_t vectors
- * 
- * @param v the first int32_t vector
- * @param u the second int32_t vector
- * @return const int32_t the dot product of both vectors
- */
-inline int32_t dot(const ivec4& v, const ivec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
-
-/**
- * @brief calculate the length of a 3D vector
- * 
- * @param v a constant reference to the vector to calculate the length of
- * @return constexpr float the length of the vector
- */
-inline float length(const ivec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);}
-
-/**
- * @brief calculate a vector that points in the same direction 
- * 
- * @param v a vector to normalize
- * @return vec3 a vector pointing in the same direction as the input but with a length of 1
- */
-inline ivec4 normalize(const ivec4& v) noexcept {return v / length(v);}
-
-#endif
 
 /**
  * @brief add two 4D int32_t vectors together
@@ -289,9 +249,45 @@ ivec4 ivec4_divide(ivec4 v, ivec4 u);
  */
 int32_t ivec4_dot(ivec4 v, ivec4 u);
 
-//end a potential C section
+//end a potential C section and add the C++ specific functions
 #if __cplusplus
 }
+
+/**
+ * @brief print a 4D vector into an output stream
+ * 
+ * @param os the output output stream to fill
+ * @param u the 4D int32_t vector to put into the output stream
+ * @return std::ostream& the filled output stream
+ */
+inline std::ostream& operator<<(std::ostream& os, const s_ivec4& u) noexcept
+{return os << "(" << u.x << ", " << u.y << ", " << u.z << ", " << u.w << ")";}
+
+/**
+ * @brief calculate the dot product of two 2D int32_t vectors
+ * 
+ * @param v the first int32_t vector
+ * @param u the second int32_t vector
+ * @return const int32_t the dot product of both vectors
+ */
+inline int32_t dot(const ivec4& v, const ivec4& u) noexcept {return v.x * u.x + v.y * u.y + v.z * u.z + v.w * u.w;}
+
+/**
+ * @brief calculate the length of a 3D vector
+ * 
+ * @param v a constant reference to the vector to calculate the length of
+ * @return constexpr float the length of the vector
+ */
+inline float length(const ivec4& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);}
+
+/**
+ * @brief calculate a vector that points in the same direction 
+ * 
+ * @param v a vector to normalize
+ * @return vec3 a vector pointing in the same direction as the input but with a length of 1
+ */
+inline ivec4 normalize(const ivec4& v) noexcept {return v / length(v);}
+
 #endif
 
 #endif
