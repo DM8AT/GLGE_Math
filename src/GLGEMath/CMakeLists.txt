@@ -23,6 +23,8 @@ set(GLGE_MATH_SRC
         Vector/uint32_t/GLGE_uivec2.cpp
         Vector/uint32_t/GLGE_uivec3.cpp
         Vector/uint32_t/GLGE_uivec4.cpp
+
+        Imaginary/Quaternions/Quaternion.cpp
     )
 
 # needed to check if AVX2 is supported

@@ -18,6 +18,11 @@
 //include 3D vectors to use add rotation / constructors using 3D vectors
 #include "../../Vector/floats/GLGE_vec3.h"
 
+//create C linkage for everything
+#if __cplusplus
+extern "C" {
+#endif
+
 /**
  * @brief store an instance of a quaternion
  */
@@ -165,5 +170,74 @@ typedef struct s_Quaternion {
     #endif
 
 } Quaternion;
+
+/**
+ * @brief add two quaternions together
+ * 
+ * @param q a pointer to the first quaternion
+ * @param p a pointer to the second quaternion
+ * @return Quaternion the sum of both quaternions
+ */
+Quaternion quaternion_add(Quaternion* q, Quaternion* p);
+
+/**
+ * @brief subtract two quaternions
+ * 
+ * @param q a pointer to the quaternion to subtract from
+ * @param p a pointer to the quaternion to subtract
+ * @return Quaternion the difference of teh quaternions
+ */
+Quaternion quaternion_subtract(Quaternion* q, Quaternion* p);
+
+/**
+ * @brief conjugate a quaternion
+ * 
+ * This inverses the imaginary parts and keeps the real part as it is
+ * 
+ * @param q a pointer to the quaternion to conjugate
+ * @return Quaternion the conjugated quaternion
+ */
+Quaternion quaternion_conjugate(Quaternion* q);
+
+/**
+ * @brief multiply two quaternions together
+ * 
+ * @param q a pointer to the first quaternion
+ * @param p a pointer to the second quaternion
+ * @return Quaternion the product of both quaternions
+ */
+Quaternion quaternion_multiply(Quaternion* q, Quaternion* p);
+
+/**
+ * @brief multiply a quaternion with a 3D vector
+ * 
+ * @param q a pointer to the quaternion
+ * @param v a pointer to the 3D vector
+ * @return Quaternion a pointer to a quaternion containing the product
+ */
+Quaternion quaternion_multiplyWithVec3(Quaternion* q, vec3* v);
+
+/**
+ * @brief scale a quaternion
+ * 
+ * @param q a pointer to the quaternion to scale
+ * @param s the factor to scale the quaternion with
+ * @return Quaternion the scaled quaternion
+ */
+Quaternion quaternion_scale(Quaternion* q, float s);
+
+/**
+ * @brief divide a quaternion by a scalar
+ * 
+ * @param q a pointer to the quaternion to scale down
+ * @param s the inverse factor to scale down with
+ * @return Quaternion the scaled quaternion
+ */
+Quaternion quaternion_divide(Quaternion* q, float s);
+
+//end a potential C section
+#if __cplusplus
+}
+#endif
 
 #endif
