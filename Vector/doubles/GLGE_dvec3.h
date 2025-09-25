@@ -306,7 +306,7 @@ inline constexpr dvec3 cross(const dvec3& v, const dvec3& u) noexcept {return dv
  * @param v a constant reference to the vector to calculate the length of
  * @return constexpr float the length of the vector
  */
-inline float length(const dvec3& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);}
+inline float length(const dvec3& v) noexcept {return glge::sqrt((float)(v.x*v.x + v.y*v.y + v.z*v.z));}
 
 /**
  * @brief calculate a vector that points in the same direction 

@@ -276,7 +276,7 @@ inline constexpr double dot(const dvec2& v, const dvec2& u) noexcept {return v.x
  * @param v a constant reference to the vector to calculate the length of
  * @return constexpr float the length of the vector
  */
-inline float length(const dvec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
+inline float length(const dvec2& v) noexcept {return glge::sqrt((float)(v.x*v.x + v.y*v.y));}
 
 /**
  * @brief calculate a vector that points in the same direction 
