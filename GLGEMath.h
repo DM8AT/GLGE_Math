@@ -21,6 +21,8 @@
 #include "Vector/int32_t/GLGEVecInts.h"
 //include the unsigned integer vectors
 #include "Vector/uint32_t/GLGEVecUInts.h"
+//include integer casts
+#include "Vector/VectorCast.hpp"
 //include the imaginary stuff
 #include "Imaginary/Imaginary.h"
 
