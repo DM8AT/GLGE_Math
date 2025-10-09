@@ -9,4 +9,13 @@ This library is designed to be easy to understand and should be easy to extend i
 GML is a fast and huge math library, but is complicated with the inheritance, typedefs and template patterns. Another drawback with GML is, that GML has (as far as i know) no C interface. 
 But because all GLGE-related libraries support both C++ as well as C, a C interface is required. 
 
-# 
+# Features
+
+Currently, only a subset of all planed features is supported as developement on the GLGE library set is still continuing. 
+
+## Currently supported features
+
+- Vectors
+    - 
+
+## Planed features
