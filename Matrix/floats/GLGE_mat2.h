@@ -248,6 +248,60 @@ typedef struct s_mat2
     }
 
     /**
+     * @brief get the cofactor matrix of this matrix
+     * 
+     * @return constexpr s_mat2 the cofactor matrix
+     */
+    inline constexpr s_mat2 cofactors() const noexcept {
+        return s_mat2(
+            vec2(
+                 rows[1].y, 
+                -rows[1].y
+            ),
+            vec2(
+                -rows[0].x,
+                 rows[0].x
+            )
+        );
+    };
+
+    /**
+     * @brief get the transpose of the matrix
+     * 
+     * @return constexpr s_mat2 the transposed matrix
+     */
+    inline constexpr s_mat2 transpose() const noexcept {
+        return s_mat2(
+            vec2(
+                rows[0].x, 
+                rows[1].x
+            ),
+            vec2(
+                rows[0].y, 
+                rows[1].y
+            )
+        );
+    }
+
+    /**
+     * @brief compute the adjugate matrix of a 2*2 float matrix
+     * 
+     * @return constexpr s_mat2 the adjugate matrix of this matrix
+     */
+    inline constexpr s_mat2 adjugate() const noexcept {
+        return s_mat2(
+            vec2(
+                 rows[1].y, 
+                -rows[0].y
+            ),
+            vec2(
+                -rows[1].x,
+                 rows[0].x
+            )
+        );
+    }
+
+    /**
      * @brief calculate the inverse of the matrix
      * 
      * @return s_mat2 the inverse matrix
@@ -256,20 +310,172 @@ typedef struct s_mat2
         //cache the inverse determinant
         float inv_det = 1.f / determinant();
         //return a matrix where all elements are swapped correctly and scaled by the inverse determinant
-        return s_mat2(
-            vec2(
-                 rows[1].y*inv_det, 
-                -rows[0].y*inv_det
-            ),
-            vec2(
-                -rows[1].x*inv_det,
-                 rows[0].x*inv_det
-            )
-        );
+        return cofactors() * inv_det;
     }
 
     #endif
 
 } mat2;
+
+//for C++ start a C-Section
+#if __cplusplus
+extern "C" {
+#endif
+
+/**
+ * @brief add two 2x2 float matrices together
+ * 
+ * @param a a constant pointer to the first matrix
+ * @param b a constant pointer to the second matrix
+ * @return mat2 the sum of the matrices
+ */
+mat2 mat2_add(const mat2* a, const mat2* b);
+
+/**
+ * @brief add a float to a 2x2 matrix
+ * 
+ * @param a a constant pointer to the matrix to add to
+ * @param b the float to add to the matrix
+ * @return mat2 the sum of the matrix and the scalar
+ */
+mat2 mat2_addFloat(const mat2* a, float b);
+
+/**
+ * @brief add a matrix to another matrix
+ * 
+ * @param a a pointer to the matrix to add to
+ * @param b a constant pointer to the matrix to add to a
+ */
+void mat2_addTo(mat2* a, const mat2* b);
+
+/**
+ * @brief add a float to a matrix
+ * 
+ * @param a a pointer to the matrix to add to
+ * @param b the float to add to a
+ */
+void mat2_addFloatTo(mat2* a, float b);
+
+/**
+ * @brief subtract a matrix from another matrix
+ * 
+ * @param a a constant pointer to the first matrix
+ * @param b a constant pointer to the second matrix
+ * @return mat2 the difference of all elements
+ */
+mat2 mat2_subtract(const mat2* a, const mat2* b);
+
+/**
+ * @brief subtract a float from the matrix
+ * 
+ * @param a a constant pointer to the matrix to subtract from
+ * @param b the float to subtract from the matrix
+ * @return mat2 the difference of the matrix and the scalar
+ */
+mat2 mat2_subtractFloat(const mat2* a, float b);
+
+/**
+ * @brief subtract a matrix from another matrix
+ * 
+ * @param a a pointer to the matrix to subtract from
+ * @param b a constant pointer to the matrix to subtract from a
+ */
+void mat2_subtractFrom(mat2* a, const mat2* b);
+
+/**
+ * @brief subtract a float from a matrix
+ * 
+ * @param a a pointer to the matrix to subtract from
+ * @param b the float to subtract from the matrix
+ */
+void mat2_subtractFloatFrom(mat2* a, float b);
+
+/**
+ * @brief multiply two matrices together
+ * 
+ * @param a a constant pointer to the first matrix
+ * @param b a constant pointer to the second matrix
+ * @return mat2 the product of both matrices
+ */
+mat2 mat2_multiply(const mat2* a, const mat2* b);
+
+/**
+ * @brief scale a matrix by a scalar
+ * 
+ * @param a a constant pointer to the matrix to scale
+ * @param b the float to scale the matrix with
+ * @return mat2 the scaled matrix
+ */
+mat2 mat2_scale(const mat2* a, float b);
+
+/**
+ * @brief apply the matrix to a vector by multiplying them together
+ * 
+ * @param a a constant pointer to the matrix to apply
+ * @param b a constant pointer to the vector to multiply with the matrix
+ * @return vec2 the product of the matrix and the vector
+ */
+vec2 mat2_apply(const mat2* a, const vec2* b);
+
+/**
+ * @brief multiply another matrix to a matrix
+ * 
+ * @param a a pointer to the matrix to multiply with and to
+ * @param b a constant pointer to the matrix to multiply with
+ */
+void mat2_multiplyTo(mat2* a, const mat2* b);
+
+/**
+ * @brief scale a matrix to a matrix
+ * 
+ * @param a a pointer to the matrix to scale
+ * @param b the float to scale the matrix with
+ */
+void mat2_scaleTo(mat2* a, float b);
+
+/**
+ * @brief compute the determinant of a matrix
+ * 
+ * @param mat a constant pointer to the matrix to compute the determinant of
+ * @return float the determinant of the matrix
+ */
+float mat2_determinant(const mat2* mat);
+
+/**
+ * @brief get the cofactor matrix of a matrix
+ * 
+ * @param mat a constant pointer to the matrix to compute the cofactors of
+ * @return mat2 the cofactor matrix
+ */
+mat2 mat2_cofactors(const mat2* mat);
+
+/**
+ * @brief compute the adjugate matrix of a matrix
+ * 
+ * @param mat a constant pointer to the matrix to compute the adjugate matrix for
+ * @return mat2 the adjugate matrix
+ */
+mat2 mat2_adjugate(const mat2* mat);
+
+/**
+ * @brief compute the transpose of a matrix
+ * 
+ * @param mat a constant pointer to a matrix to compute the transpose of
+ * @return mat2 the transposed matrix
+ */
+mat2 mat2_traspose(const mat2* mat);
+
+/**
+ * @brief compute the inverse of a matrix
+ * 
+ * @param mat a constant pointer to a matrix to compute the inverse of
+ * @return mat2 the inverse matrix
+ */
+mat2 mat2_inverse(const mat2* mat);
+
+//end a potential C-Section
+#if __cplusplus
+}
+#endif
 
 #endif
