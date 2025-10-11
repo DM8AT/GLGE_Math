@@ -22,4 +22,12 @@ vec4 vec4_multiply(vec4 v, vec4 u) {return v * u;}
 
 vec4 vec4_divide(vec4 v, vec4 u) {return v / u;}
 
+void vec4_addTo(vec4* a, vec4 b) {*a += b;}
+
+void vec4_subtractFrom(vec4* a, vec4 b) {*a -= b;}
+
+void vec4_multiplyTo(vec4* a, vec4 b) {*a *= b;}
+
+void vec4_divideBy(vec4* a, vec4 b) {*a /= b;}
+
 float vec4_dot(vec4 v, vec4 u) {return dot(v, u);}

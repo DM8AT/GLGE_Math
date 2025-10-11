@@ -24,6 +24,10 @@ set(GLGE_MATH_SRC
         Vector/uint32_t/GLGE_uivec3.cpp
         Vector/uint32_t/GLGE_uivec4.cpp
 
+        Matrix/floats/GLGE_mat2.cpp
+        Matrix/floats/GLGE_mat3.cpp
+        Matrix/floats/GLGE_mat4.cpp
+
         Imaginary/Quaternions/Quaternion.cpp
     )
 

@@ -37,7 +37,7 @@ typedef struct s_mat2
      * default constructor, all values are 0
      */
     inline constexpr s_mat2() noexcept
-     : m({1,0,0,1}) 
+     : m{1,0,0,1}
     {}
 
     /**
@@ -50,7 +50,7 @@ typedef struct s_mat2
      */
     inline constexpr s_mat2(float m00, float m01, 
          float m10, float m11) noexcept
-     : m({m00,m01,m10,m11}) 
+     : m{m00,m01,m10,m11} 
     {}
 
     /**
@@ -60,7 +60,7 @@ typedef struct s_mat2
      * @param r1 a const reference to a 2D float vector for the bottom row
      */
     inline constexpr s_mat2(const vec2& r0, const vec2& r1) noexcept
-     : rows({r0,r1}) 
+     : rows{r0,r1}
     {}
 
     /**

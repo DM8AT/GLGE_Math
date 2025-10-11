@@ -284,6 +284,86 @@ typedef struct s_dvec4 {
     inline constexpr s_dvec4 operator-(void)  const noexcept
     {return s_dvec4(-x,-y,-z,-w);}
 
+    /**
+     * @brief add and assign another vector to this one
+     * 
+     * @param u the vector to add
+     * @return s_dvec4& this vector after addition
+     */
+    inline s_dvec4& operator+=(const s_dvec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+            #if GLGE_MATH_ALLOW_AVX2
+            simd = _mm256_add_pd(simd, u.simd);
+            #else
+            lower = _mm_add_pd(lower, u.lower);
+            upper = _mm_add_pd(upper, u.upper);
+            #endif
+        #else
+        x += u.x; y += u.y; z += u.z; w += u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief subtract and assign another vector from this one
+     * 
+     * @param u the vector to subtract
+     * @return s_dvec4& this vector after subtraction
+     */
+    inline s_dvec4& operator-=(const s_dvec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+            #if GLGE_MATH_ALLOW_AVX2
+            simd = _mm256_sub_pd(simd, u.simd);
+            #else
+            lower = _mm_sub_pd(lower, u.lower);
+            upper = _mm_sub_pd(upper, u.upper);
+            #endif
+        #else
+        x -= u.x; y -= u.y; z -= u.z; w -= u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief multiply and assign another vector to this one
+     * 
+     * @param u the vector to multiply
+     * @return s_dvec4& this vector after multiplication
+     */
+    inline s_dvec4& operator*=(const s_dvec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+            #if GLGE_MATH_ALLOW_AVX2
+            simd = _mm256_mul_pd(simd, u.simd);
+            #else
+            lower = _mm_mul_pd(lower, u.lower);
+            upper = _mm_mul_pd(upper, u.upper);
+            #endif
+        #else
+        x *= u.x; y *= u.y; z *= u.z; w *= u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief divide and assign another vector to this one
+     * 
+     * @param u the vector to divide by
+     * @return s_dvec4& this vector after division
+     */
+    inline s_dvec4& operator/=(const s_dvec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+            #if GLGE_MATH_ALLOW_AVX2
+            simd = _mm256_div_pd(simd, u.simd);
+            #else
+            lower = _mm_div_pd(lower, u.lower);
+            upper = _mm_div_pd(upper, u.upper);
+            #endif
+        #else
+        x /= u.x; y /= u.y; z /= u.z; w /= u.w;
+        #endif
+        return *this;
+    }
+
     #endif
 
 } dvec4;
@@ -331,6 +411,38 @@ dvec4 dvec4_multiply(dvec4 v, dvec4 u);
  * @return dvec4 the fraction of both vectors
  */
 dvec4 dvec4_divide(dvec4 v, dvec4 u);
+
+/**
+ * @brief add a dvec4 to anotherd vec4
+ * 
+ * @param a a pointer the vector to add to
+ * @param b the vector to add to a
+ */
+void dvec4_addTo(dvec4* a, dvec4 b);
+
+/**
+ * @brief subtract a dvec4 from another dvec4
+ * 
+ * @param a a pointer to the dvec4 to subtract from
+ * @param b the vector to subtract from a
+ */
+void dvec4_subtractFrom(dvec4* a, dvec4 b);
+
+/**
+ * @brief multiply a dvec4 with another dvec4
+ * 
+ * @param a a pointer to the dvec4 to multiply to
+ * @param b the dvec4 to multiply with a
+ */
+void dvec4_multiplyTo(dvec4* a, dvec4 b);
+
+/**
+ * @brief divide a svec4 by another vector
+ * 
+ * @param a a pointer to the dvec4 to divide
+ * @param b the vec4 to divide with
+ */
+void dvec4_divideBy(dvec4* a, dvec4 b);
 
 /**
  * @brief calculate the dot product of two 4D double vectors

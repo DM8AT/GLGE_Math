@@ -25,7 +25,7 @@ typedef struct s_mat3
     union {
         //use a 4 element (3*3) float array for data storage
         float m[9];
-        //the matrix is made of 3 rows where each row has 2 elements (2D vector)
+        //the matrix is made of 3 rows where each row has 3 elements (3D vector)
         vec3 rows[3];
     };
     
@@ -37,7 +37,7 @@ typedef struct s_mat3
      * default constructor, all values are 0
      */
     inline constexpr s_mat3() noexcept
-     : m({1,0,0,0,1,0,0,0,1}) 
+     : m{1,0,0,0,1,0,0,0,1}
     {}
 
     /**
@@ -51,7 +51,7 @@ typedef struct s_mat3
     inline constexpr s_mat3(float m00, float m01, float m02,
                             float m10, float m11, float m12,
                             float m20, float m21, float m22) noexcept
-     : m({m00,m01,m02,m10,m11,m12,m20,m21,m22}) 
+     : m{m00,m01,m02,m10,m11,m12,m20,m21,m22} 
     {}
 
     /**
@@ -62,7 +62,7 @@ typedef struct s_mat3
      * @param r2 a const reference to a 3D float vector for the bottom row
      */
     inline constexpr s_mat3(const vec3& r0, const vec3& r1, const vec3& r2) noexcept
-     : rows({r0,r1,r2}) 
+     : rows{r0,r1,r2} 
     {}
 
     /**
@@ -84,6 +84,7 @@ typedef struct s_mat3
     inline constexpr void operator=(float c) noexcept {
         rows[0] = c;
         rows[1] = c;
+        rows[2] = c;
     }
 
     /**

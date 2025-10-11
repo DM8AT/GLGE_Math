@@ -192,6 +192,58 @@ typedef struct s_ivec4 {
     inline constexpr s_ivec4 operator-(void)  const noexcept
     {return s_ivec4(-x,-y,-z,-w);}
 
+    /**
+     * @brief add and assign another vector to this one
+     * 
+     * @param u the vector to add
+     * @return s_ivec4& this vector after addition
+     */
+    inline s_ivec4& operator+=(const s_ivec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+        simd = _mm_add_epi32(simd, u.simd);
+        #else
+        x += u.x; y += u.y; z += u.z; w += u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief subtract and assign another vector from this one
+     * 
+     * @param u the vector to subtract
+     * @return s_ivec4& this vector after subtraction
+     */
+    inline s_ivec4& operator-=(const s_ivec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+        simd = _mm_sub_epi32(simd, u.simd);
+        #else
+        x -= u.x; y -= u.y; z -= u.z; w -= u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief multiply and assign another vector to this one
+     * 
+     * @param u the vector to multiply
+     * @return s_ivec4& this vector after multiplication
+     */
+    inline s_ivec4& operator*=(const s_ivec4& u) noexcept {
+        x *= u.x; y *= u.y; z *= u.z; w *= u.w;
+        return *this;
+    }
+
+    /**
+     * @brief divide and assign another vector to this one
+     * 
+     * @param u the vector to divide by
+     * @return s_ivec4& this vector after division
+     */
+    inline s_ivec4& operator/=(const s_ivec4& u) noexcept {
+        x /= u.x; y /= u.y; z /= u.z; w /= u.w;
+        return *this;
+    }
+
     #endif
 
 } ivec4;
@@ -239,6 +291,38 @@ ivec4 ivec4_multiply(ivec4 v, ivec4 u);
  * @return ivec4 the fraction of both vectors
  */
 ivec4 ivec4_divide(ivec4 v, ivec4 u);
+
+/**
+ * @brief add a ivec4 to another ivec4
+ * 
+ * @param a a pointer the vector to add to
+ * @param b the vector to add to a
+ */
+void ivec4_addTo(ivec4* a, ivec4 b);
+
+/**
+ * @brief subtract a ivec4 from another ivec4
+ * 
+ * @param a a pointer to the ivec4 to subtract from
+ * @param b the vector to subtract from a
+ */
+void ivec4_subtractFrom(ivec4* a, ivec4 b);
+
+/**
+ * @brief multiply a ivec4 with another ivec4
+ * 
+ * @param a a pointer to the ivec4 to multiply to
+ * @param b the ivec4 to multiply with a
+ */
+void ivec4_multiplyTo(ivec4* a, ivec4 b);
+
+/**
+ * @brief divide a ivec4 by another vector
+ * 
+ * @param a a pointer to the ivec4 to divide
+ * @param b the ivec4 to divide with
+ */
+void ivec4_divideBy(ivec4* a, ivec4 b);
 
 /**
  * @brief calculate the dot product of two 4D int32_t vectors
