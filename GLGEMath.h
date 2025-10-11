@@ -25,6 +25,8 @@
 #include "Matrix/floats/GLGEMatFloats.h"
 //include double matrices
 #include "Matrix/doubles/GLGEMatDoubles.h"
+//include integer casts
+#include "Vector/VectorCast.hpp"
 //include the imaginary stuff
 #include "Imaginary/Imaginary.h"
 

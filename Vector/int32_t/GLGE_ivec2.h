@@ -213,7 +213,7 @@ inline constexpr int32_t dot(const ivec2& v, const ivec2& u) noexcept {return v.
  * @param v a constant reference to the vector to calculate the length of
  * @return constexpr float the length of the vector
  */
-inline float length(const ivec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.y);}
+inline float length(const ivec2& v) noexcept {return glge::sqrt((float)(v.x*v.x + v.y*v.y));}
 
 /**
  * @brief calculate a vector that points in the same direction 
@@ -221,7 +221,7 @@ inline float length(const ivec2& v) noexcept {return glge::sqrt(v.x*v.x + v.y*v.
  * @param v a vector to normalize
  * @return vec3 a vector pointing in the same direction as the input but with a length of 1
  */
-inline ivec2 normalize(const ivec2& v) noexcept {return v / length(v);}
+inline ivec2 normalize(const ivec2& v) noexcept {return v / (int32_t)length(v);}
 
 #endif
 
