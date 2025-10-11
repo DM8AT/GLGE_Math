@@ -28,6 +28,10 @@ set(GLGE_MATH_SRC
         Matrix/floats/GLGE_mat3.cpp
         Matrix/floats/GLGE_mat4.cpp
 
+        Matrix/doubles/GLGE_dmat2.cpp
+        Matrix/doubles/GLGE_dmat3.cpp
+        Matrix/doubles/GLGE_dmat4.cpp
+
         Imaginary/Quaternions/Quaternion.cpp
     )
 
