@@ -13,6 +13,11 @@
 #ifndef _GLGE_MATH_FLOAT_MATRIX_
 #define _GLGE_MATH_FLOAT_MATRIX_
 
-
+//include 2x2 matrices
+#include "GLGE_mat2.h"
+//include 3x3 matrices
+#include "GLGE_mat3.h"
+//include 4x4 matrices
+#include "GLGE_mat4.h"
 
 #endif

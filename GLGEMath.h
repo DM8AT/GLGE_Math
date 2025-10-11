@@ -21,6 +21,10 @@
 #include "Vector/int32_t/GLGEVecInts.h"
 //include the unsigned integer vectors
 #include "Vector/uint32_t/GLGEVecUInts.h"
+//include the float matrices
+#include "Matrix/floats/GLGEMatFloats.h"
+//include double matrices
+#include "Matrix/doubles/GLGEMatDoubles.h"
 //include the imaginary stuff
 #include "Imaginary/Imaginary.h"
 
