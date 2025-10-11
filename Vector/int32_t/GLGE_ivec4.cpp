@@ -22,4 +22,12 @@ ivec4 ivec4_multiply(ivec4 v, ivec4 u) {return v * u;}
 
 ivec4 ivec4_divide(ivec4 v, ivec4 u) {return v / u;}
 
+void ivec4_addTo(ivec4* a, ivec4 b) {*a += b;}
+
+void ivec4_subtractFrom(ivec4* a, ivec4 b) {*a -= b;}
+
+void ivec4_multiplyTo(ivec4* a, ivec4 b) {*a *= b;}
+
+void ivec4_divideBy(ivec4* a, ivec4 b) {*a /= b;}
+
 int32_t ivec4_dot(ivec4 v, ivec4 u) {return dot(v, u);}

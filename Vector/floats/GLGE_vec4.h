@@ -211,6 +211,66 @@ typedef struct s_vec4 {
     inline constexpr s_vec4 operator-(void)  const noexcept
     {return s_vec4(-x,-y,-z,-w);}
 
+    /**
+     * @brief add and assign another vector to this one
+     * 
+     * @param u the vector to add
+     * @return s_vec4& this vector after addition
+     */
+    inline s_vec4& operator+=(const s_vec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+        simd = _mm_add_ps(simd, u.simd);
+        #else
+        x += u.x; y += u.y; z += u.z; w += u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief subtract and assign another vector from this one
+     * 
+     * @param u the vector to subtract
+     * @return s_vec4& this vector after subtraction
+     */
+    inline s_vec4& operator-=(const s_vec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+        simd = _mm_sub_ps(simd, u.simd);
+        #else
+        x -= u.x; y -= u.y; z -= u.z; w -= u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief multiply and assign another vector to this one
+     * 
+     * @param u the vector to multiply
+     * @return s_vec4& this vector after multiplication
+     */
+    inline s_vec4& operator*=(const s_vec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+        simd = _mm_mul_ps(simd, u.simd);
+        #else
+        x *= u.x; y *= u.y; z *= u.z; w *= u.w;
+        #endif
+        return *this;
+    }
+
+    /**
+     * @brief divide and assign another vector to this one
+     * 
+     * @param u the vector to divide by
+     * @return s_vec4& this vector after division
+     */
+    inline s_vec4& operator/=(const s_vec4& u) noexcept {
+        #if GLGE_MATH_USE_SIMD
+        simd = _mm_div_ps(simd, u.simd);
+        #else
+        x /= u.x; y /= u.y; z /= u.z; w /= u.w;
+        #endif
+        return *this;
+    }
+
     #endif
 
 } vec4;
@@ -258,6 +318,38 @@ vec4 vec4_multiply(vec4 v, vec4 u);
  * @return vec4 the fraction of both vectors
  */
 vec4 vec4_divide(vec4 v, vec4 u);
+
+/**
+ * @brief add a vec4 to another vec4
+ * 
+ * @param a a pointer the vector to add to
+ * @param b the vector to add to a
+ */
+void vec4_addTo(vec4* a, vec4 b);
+
+/**
+ * @brief subtract a vec4 from another vec4
+ * 
+ * @param a a pointer to the vec4 to subtract from
+ * @param b the vector to subtract from a
+ */
+void vec4_subtractFrom(vec4* a, vec4 b);
+
+/**
+ * @brief multiply a vec4 with another vec4
+ * 
+ * @param a a pointer to the vec4 to multiply to
+ * @param b the vec4 to multiply with a
+ */
+void vec4_multiplyTo(vec4* a, vec4 b);
+
+/**
+ * @brief divide a vec4 by another vector
+ * 
+ * @param a a pointer to the vec4 to divide
+ * @param b the vec4 to divide with
+ */
+void vec4_divideBy(vec4* a, vec4 b);
 
 /**
  * @brief calculate the dot product of two 4D float vectors
