@@ -87,6 +87,24 @@ typedef struct s_Quaternion {
     s_Quaternion(const vec4& _vec) : vec(_vec) {}
 
     /**
+     * @brief Construct a new Quaternion from an euler angle
+     * 
+     * @param euler the euler angle (x : rotation around the x axis (roll), y : rotation around the y axis (pitch), z : rotation around the z axis (yaw))
+     */
+    s_Quaternion(const vec3& euler) noexcept {
+        //compute the half angles
+        vec3 h_a = euler * 0.5f;
+        //pre-compute the trigonometric therms
+        vec3 sins = vec3(sin(h_a.x), sin(h_a.y), sin(h_a.z));
+        vec3 coss = vec3(cos(h_a.x), cos(h_a.y), cos(h_a.z));
+        //combine to the quaternion
+        w = coss.x*coss.y*coss.z + sins.x*sins.y*sins.z;
+        i = sins.x*coss.y*coss.z + coss.x*sins.y*sins.z;
+        j = coss.x*sins.y*coss.z + sins.x*coss.y*sins.z;
+        k = coss.x*coss.y*sins.z + sins.x*sins.y*coss.z;
+    }
+
+    /**
      * @brief Destroy the Quaternion
      */
     ~s_Quaternion() {}
@@ -167,9 +185,34 @@ typedef struct s_Quaternion {
      */
     inline s_Quaternion operator/(float s) const noexcept {return vec / s;}
 
+    /**
+     * @brief rotate this quaternion with another and return the result
+     * 
+     * @param other the quaternion to apply to this one
+     * @return s_Quaternion the rotated quaternion
+     */
+    inline s_Quaternion rotate(const s_Quaternion& other) const noexcept
+    {return normalize((*this * other).vec);}
+
+    /**
+     * @brief apply the rotation of another quaternion to this one
+     * 
+     * @param other the other quaternion to apply to this one
+     */
+    inline void rotateThis(const s_Quaternion& other) noexcept
+    {*this = rotate(other);}
+
     #endif
 
 } Quaternion;
+
+/**
+ * @brief compute a quaternion from euler angles
+ * 
+ * @param euler the euler angle (x : rotation around the x axis (roll), y : rotation around the y axis (pitch), z : rotation around the z axis (yaw))
+ * @return Quaternion the quaternion that represents the same rotation
+ */
+Quaternion quaternion_fromEuler(const vec3* euler);
 
 /**
  * @brief add two quaternions together
@@ -234,6 +277,23 @@ Quaternion quaternion_scale(Quaternion* q, float s);
  * @return Quaternion the scaled quaternion
  */
 Quaternion quaternion_divide(Quaternion* q, float s);
+
+/**
+ * @brief rotate a specific quaternion by another quaternion
+ * 
+ * @param q the first quaternion
+ * @param other the quaternion to apply to the first quaternion
+ * @return Quaternion the quaternion that holds the combined rotation
+ */
+Quaternion quaternion_rotate(const Quaternion* q, const Quaternion* other);
+
+/**
+ * @brief rotate a quaternion by another quaternion
+ * 
+ * @param q the rotation to rotate
+ * @param other the quaternion to apply to the first one
+ */
+void quaternion_rotateThis(Quaternion* q, const Quaternion* other);
 
 //end a potential C section
 #if __cplusplus

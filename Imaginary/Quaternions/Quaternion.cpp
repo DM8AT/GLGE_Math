@@ -12,6 +12,8 @@
 //include the quaternion structure
 #include "Quaternion.h"
 
+Quaternion quaternion_fromEuler(const vec3* euler) {return Quaternion(*euler);}
+
 Quaternion quaternion_add(Quaternion* q, Quaternion* p) {return *q + *p;}
 
 Quaternion quaternion_subtract(Quaternion* q, Quaternion* p) {return *q - *p;}
@@ -25,3 +27,7 @@ Quaternion quaternion_multiplyWithVec3(Quaternion* q, vec3* v) {return *q * *v;}
 Quaternion quaternion_scale(Quaternion* q, float s) {return *q * s;}
 
 Quaternion quaternion_divide(Quaternion* q, float s) {return *q / s;}
+
+Quaternion quaternion_rotate(const Quaternion* q, const Quaternion* other) {q->rotate(*other);}
+
+void quaternion_rotateThis(Quaternion* q, const Quaternion* other) {q->rotateThis(*other);}
